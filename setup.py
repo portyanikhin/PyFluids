@@ -18,17 +18,34 @@ KEYWORDS = [
     "properties",
 ]
 NAME = "pyfluids"
-VERSION = "1.0.2"
+VERSION = "1.0.3"
 PYTHON_REQUIRES = ">=3.7, <3.9"
 URL = "https://github.com/portyanikhin/PyFluids"
 LICENSE = "MIT"
 CLASSIFIERS = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Manufacturing",
+    "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Natural Language :: Russian",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: Unix",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Education",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Atmospheric Science",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Typing :: Typed",
 ]
 here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, "requirements.txt")) as file:
