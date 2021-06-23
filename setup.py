@@ -18,7 +18,7 @@ KEYWORDS = [
     "properties",
 ]
 NAME = "pyfluids"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 PYTHON_REQUIRES = ">=3.7, <3.9"
 URL = "https://github.com/portyanikhin/PyFluids"
 LICENSE = "MIT"
