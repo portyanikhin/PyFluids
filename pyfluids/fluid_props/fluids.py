@@ -6,8 +6,6 @@ from dataclasses import dataclass
 from typing import Dict, List, Union
 
 import CoolProp
-from CoolProp.CoolProp import AbstractState
-from CoolProp.CoolProp import generate_update_pair
 
 from pyfluids.fluid_props.fluid_lists import *
 from pyfluids.fluid_props.inputs import *
@@ -108,7 +106,7 @@ class AbstractFluid(FluidInterface):
         """
         self._check_input_types(int, input1, input2)
         self._backend.update(
-            *generate_update_pair(
+            *CoolProp.CoolProp.generate_update_pair(
                 input1.coolprop_key, input1.value, input2.coolprop_key, input2.value
             )
         )
@@ -203,7 +201,7 @@ class Fluid(AbstractFluid, SingleComponent):
 
     def __post_init__(self):
         backend_name = "HEOS" if isinstance(self.name, PureFluids) else "INCOMP"
-        self._backend = AbstractState(backend_name, self.name.coolprop_name)
+        self._backend = CoolProp.AbstractState(backend_name, self.name.coolprop_name)
         if isinstance(self.name, (PureFluids, IncompPureFluids)):
             self.fraction = 1
         elif self.fraction is None:
@@ -274,5 +272,5 @@ class Mixture(AbstractFluid, MultiComponent):
                 "Invalid component mass fractions! Their sum should be equal to 1."
             )
         mixture_name = "&".join(name.coolprop_name for name in self.components)
-        self._backend = AbstractState("HEOS", mixture_name)
+        self._backend = CoolProp.AbstractState("HEOS", mixture_name)
         self._backend.set_mass_fractions(self.fractions)
