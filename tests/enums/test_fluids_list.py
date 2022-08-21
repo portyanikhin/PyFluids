@@ -15,63 +15,60 @@ class TestFluidsList:
 
     @pytest.mark.parametrize("fluid", list(FluidsList))
     def test_coolprop_name(self, fluid: FluidsList):
-        match fluid:
-            case fluid if fluid.coolprop_name.endswith(".mix"):
-                pass
-            case FluidsList.R50:
-                assert fluid.coolprop_name == "Methane"
-            case FluidsList.RE143a:
-                assert fluid.coolprop_name == "HFE143m"
-            case FluidsList.R152a:
-                assert fluid.coolprop_name == "R152A"
-            case FluidsList.R170:
-                assert fluid.coolprop_name == "Ethane"
-            case FluidsList.R290:
-                assert fluid.coolprop_name == "n-Propane"
-            case FluidsList.R600:
-                assert fluid.coolprop_name == "n-Butane"
-            case FluidsList.R600a:
-                assert fluid.coolprop_name == "IsoButane"
-            case FluidsList.R601:
-                assert fluid.coolprop_name == "n-Pentane"
-            case FluidsList.R601a:
-                assert fluid.coolprop_name == "Isopentane"
-            case FluidsList.R702:
-                assert fluid.coolprop_name == "Hydrogen"
-            case FluidsList.R704:
-                assert fluid.coolprop_name == "Helium"
-            case FluidsList.R717:
-                assert fluid.coolprop_name == "Ammonia"
-            case FluidsList.R718:
-                assert fluid.coolprop_name == "Water"
-            case FluidsList.R720:
-                assert fluid.coolprop_name == "Neon"
-            case FluidsList.R728:
-                assert fluid.coolprop_name == "Nitrogen"
-            case FluidsList.R729:
-                assert fluid.coolprop_name == "Air"
-            case FluidsList.R732:
-                assert fluid.coolprop_name == "Oxygen"
-            case FluidsList.R740:
-                assert fluid.coolprop_name == "Argon"
-            case FluidsList.R744:
-                assert fluid.coolprop_name == "CarbonDioxide"
-            case FluidsList.R764:
-                assert fluid.coolprop_name == "SulfurDioxide"
-            case FluidsList.R846:
-                assert fluid.coolprop_name == "SulfurHexafluoride"
-            case FluidsList.R1150:
-                assert fluid.coolprop_name == "Ethylene"
-            case FluidsList.R1270:
-                assert fluid.coolprop_name == "Propylene"
-            case FluidsList.Butene:
-                assert fluid.coolprop_name == "1-Butene"
-            case FluidsList.WaterIncomp:
-                assert fluid.coolprop_name == "Water"
-            case _:
-                assert fluid.name == self.remove_chars(
-                    fluid.coolprop_name, "-", "(", ")"
-                )
+        if fluid.coolprop_name.endswith(".mix"):
+            pass
+        elif fluid is FluidsList.R50:
+            assert fluid.coolprop_name == "Methane"
+        elif fluid is FluidsList.RE143a:
+            assert fluid.coolprop_name == "HFE143m"
+        elif fluid is FluidsList.R152a:
+            assert fluid.coolprop_name == "R152A"
+        elif fluid is FluidsList.R170:
+            assert fluid.coolprop_name == "Ethane"
+        elif fluid is FluidsList.R290:
+            assert fluid.coolprop_name == "n-Propane"
+        elif fluid is FluidsList.R600:
+            assert fluid.coolprop_name == "n-Butane"
+        elif fluid is FluidsList.R600a:
+            assert fluid.coolprop_name == "IsoButane"
+        elif fluid is FluidsList.R601:
+            assert fluid.coolprop_name == "n-Pentane"
+        elif fluid is FluidsList.R601a:
+            assert fluid.coolprop_name == "Isopentane"
+        elif fluid is FluidsList.R702:
+            assert fluid.coolprop_name == "Hydrogen"
+        elif fluid is FluidsList.R704:
+            assert fluid.coolprop_name == "Helium"
+        elif fluid is FluidsList.R717:
+            assert fluid.coolprop_name == "Ammonia"
+        elif fluid is FluidsList.R718:
+            assert fluid.coolprop_name == "Water"
+        elif fluid is FluidsList.R720:
+            assert fluid.coolprop_name == "Neon"
+        elif fluid is FluidsList.R728:
+            assert fluid.coolprop_name == "Nitrogen"
+        elif fluid is FluidsList.R729:
+            assert fluid.coolprop_name == "Air"
+        elif fluid is FluidsList.R732:
+            assert fluid.coolprop_name == "Oxygen"
+        elif fluid is FluidsList.R740:
+            assert fluid.coolprop_name == "Argon"
+        elif fluid is FluidsList.R744:
+            assert fluid.coolprop_name == "CarbonDioxide"
+        elif fluid is FluidsList.R764:
+            assert fluid.coolprop_name == "SulfurDioxide"
+        elif fluid is FluidsList.R846:
+            assert fluid.coolprop_name == "SulfurHexafluoride"
+        elif fluid is FluidsList.R1150:
+            assert fluid.coolprop_name == "Ethylene"
+        elif fluid is FluidsList.R1270:
+            assert fluid.coolprop_name == "Propylene"
+        elif fluid is FluidsList.Butene:
+            assert fluid.coolprop_name == "1-Butene"
+        elif fluid is FluidsList.WaterIncomp:
+            assert fluid.coolprop_name == "Water"
+        else:
+            assert fluid.name == self.remove_chars(fluid.coolprop_name, "-", "(", ")")
 
     @pytest.mark.parametrize("fluid", list(FluidsList))
     def test_backend(self, fluid: FluidsList):
