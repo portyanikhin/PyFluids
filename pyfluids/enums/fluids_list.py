@@ -1,6 +1,6 @@
 from enum import Enum
 
-from pyfluids.enums.mix import Mix
+from .mix import Mix
 
 __all__ = ["FluidsList"]
 
