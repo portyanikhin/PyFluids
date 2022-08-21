@@ -1,5 +1,7 @@
 from enum import Enum
 
+__all__ = ["Phases"]
+
 
 class Phases(Enum):
     """Fluids and mixtures phase states."""
