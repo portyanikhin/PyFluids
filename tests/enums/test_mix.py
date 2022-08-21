@@ -1,6 +1,6 @@
 import pytest
 
-from pyfluids.enums.mix import Mix
+from pyfluids import Mix
 
 
 class TestMix:

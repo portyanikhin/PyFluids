@@ -1,6 +1,6 @@
 import pytest
 
-from pyfluids.enums.phases import Phases
+from pyfluids import Phases
 
 
 class TestPhases:
