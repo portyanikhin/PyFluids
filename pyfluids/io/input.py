@@ -89,7 +89,7 @@ class Input(AbstractInput):
         Mass vapor quality.
 
         Args:
-            value (float): The value of the input [-].
+            value (float): The value of the input (from 0 to 1) [-].
 
         Returns:
             Input: Mass vapor quality for the input.
