@@ -10,9 +10,8 @@ class InputHumidAir(AbstractInput):
         """
         CoolProp keyed input for humid air.
 
-        Args:
-            coolprop_key (str): CoolProp internal key.
-            value (float): Input value in SI units.
+        :param coolprop_key: CoolProp internal key.
+        :param value: Input value in SI units.
         """
         super().__init__(coolprop_key, value)
 
@@ -21,11 +20,8 @@ class InputHumidAir(AbstractInput):
         """
         Mass density per humid air unit.
 
-        Args:
-            value (float): The value of the input [kg/m3].
-
-        Returns:
-            InputHumidAir: Mass density per humid air unit for the input.
+        :param value: The value of the input [kg/m3].
+        :return: Mass density per humid air unit for the input.
         """
         return cls("Vha", 1 / value)
 
@@ -34,11 +30,8 @@ class InputHumidAir(AbstractInput):
         """
         Dew-point temperature.
 
-        Args:
-            value (float): The value of the input [°C].
-
-        Returns:
-            InputHumidAir: Dew-point temperature for the input.
+        :param value: The value of the input [°C].
+        :return: Dew-point temperature for the input.
         """
         return cls("D", value + 273.15)
 
@@ -47,11 +40,8 @@ class InputHumidAir(AbstractInput):
         """
         Mass specific enthalpy per humid air.
 
-        Args:
-            value (float): The value of the input [J/kg].
-
-        Returns:
-            InputHumidAir: Mass specific enthalpy per humid air for the input.
+        :param value: The value of the input [J/kg].
+        :return: Mass specific enthalpy per humid air for the input.
         """
         return cls("Hha", value)
 
@@ -60,11 +50,8 @@ class InputHumidAir(AbstractInput):
         """
         Mass specific entropy per humid air.
 
-        Args:
-            value (float): The value of the input [J/kg/K].
-
-        Returns:
-            InputHumidAir: Mass specific entropy per humid air for the input.
+        :param value: The value of the input [J/kg/K].
+        :return: Mass specific entropy per humid air for the input.
         """
         return cls("Sha", value)
 
@@ -73,11 +60,8 @@ class InputHumidAir(AbstractInput):
         """
         Absolute humidity ratio.
 
-        Args:
-            value (float): The value of the input [kg/kg d.a.].
-
-        Returns:
-            InputHumidAir: Absolute humidity ratio for the input.
+        :param value: The value of the input [kg/kg d.a.].
+        :return: Absolute humidity ratio for the input.
         """
         return cls("W", value)
 
@@ -86,11 +70,8 @@ class InputHumidAir(AbstractInput):
         """
         Partial pressure of water vapor.
 
-        Args:
-            value (float): The value of the input [Pa].
-
-        Returns:
-            InputHumidAir: Partial pressure of water vapor for the input.
+        :param value: The value of the input [Pa].
+        :return: Partial pressure of water vapor for the input.
         """
         return cls("P_w", value)
 
@@ -99,11 +80,8 @@ class InputHumidAir(AbstractInput):
         """
         Absolute pressure.
 
-        Args:
-            value (float): The value of the input [Pa].
-
-        Returns:
-            InputHumidAir: Absolute pressure for the input.
+        :param value: The value of the input [Pa].
+        :return: Absolute pressure for the input.
         """
         return cls("P", value)
 
@@ -112,11 +90,8 @@ class InputHumidAir(AbstractInput):
         """
         Relative humidity.
 
-        Args:
-            value (float): The value of the input [%].
-
-        Returns:
-            InputHumidAir: Relative humidity for the input.
+        :param value: The value of the input [%].
+        :return: Relative humidity for the input.
         """
         return cls("R", value * 1e-2)
 
@@ -125,11 +100,8 @@ class InputHumidAir(AbstractInput):
         """
         Temperature.
 
-        Args:
-            value (float): The value of the input [°C].
-
-        Returns:
-            InputHumidAir: Temperature for the input.
+        :param value: The value of the input [°C].
+        :return: Temperature for the input.
         """
         return cls("T", value + 273.15)
 
@@ -138,10 +110,7 @@ class InputHumidAir(AbstractInput):
         """
         Wet-bulb temperature.
 
-        Args:
-            value (float): The value of the input [°C].
-
-        Returns:
-            InputHumidAir: Wet-bulb temperature for the input.
+        :param value: The value of the input [°C].
+        :return: Wet-bulb temperature for the input.
         """
         return cls("B", value + 273.15)
