@@ -13,7 +13,7 @@ class TestInput:
             (Input.entropy(5e3), CoolProp.iSmass, 5e3),
             (Input.internal_energy(1e4), CoolProp.iUmass, 1e4),
             (Input.pressure(101325), CoolProp.iP, 101325),
-            (Input.quality(0.5), CoolProp.iQ, 0.5),
+            (Input.quality(50), CoolProp.iQ, 0.5),
             (Input.temperature(20), CoolProp.iT, 293.15),
         ],
     )
