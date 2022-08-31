@@ -10,9 +10,8 @@ class AbstractInput(ABC):
         """
         Abstract CoolProp keyed input.
 
-        Args:
-            coolprop_key (Union[int, str]): CoolProp internal key.
-            value (float): Input value in SI units.
+        :param coolprop_key: CoolProp internal key.
+        :param value: Input value in SI units.
         """
         self.__coolprop_key, self.__value = coolprop_key, value
 

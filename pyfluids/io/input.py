@@ -12,9 +12,8 @@ class Input(AbstractInput):
         """
         CoolProp keyed input for fluids and mixtures.
 
-        Args:
-            coolprop_key (int): CoolProp internal key.
-            value (float): Input value in SI units.
+        :param coolprop_key: CoolProp internal key.
+        :param value: Input value in SI units.
         """
         super().__init__(coolprop_key, value)
 
@@ -23,11 +22,8 @@ class Input(AbstractInput):
         """
         Mass density.
 
-        Args:
-            value (float): The value of the input [kg/m3].
-
-        Returns:
-            Input: Mass density for the input.
+        :param value: The value of the input [kg/m3].
+        :return: Mass density for the input.
         """
         return cls(CoolProp.iDmass, value)
 
@@ -36,11 +32,8 @@ class Input(AbstractInput):
         """
         Mass specific enthalpy.
 
-        Args:
-            value (float): The value of the input [J/kg].
-
-        Returns:
-            Input: Mass specific enthalpy for the input.
+        :param value: The value of the input [J/kg].
+        :return: Mass specific enthalpy for the input.
         """
         return cls(CoolProp.iHmass, value)
 
@@ -49,11 +42,8 @@ class Input(AbstractInput):
         """
         Mass specific entropy.
 
-        Args:
-            value (float): The value of the input [J/kg/K].
-
-        Returns:
-            Input: Mass specific entropy for the input.
+        :param value: The value of the input [J/kg/K].
+        :return: Mass specific entropy for the input.
         """
         return cls(CoolProp.iSmass, value)
 
@@ -62,11 +52,8 @@ class Input(AbstractInput):
         """
         Mass specific internal energy.
 
-        Args:
-            value (float): The value of the input [J/kg].
-
-        Returns:
-            Input: Mass specific internal energy for the input.
+        :param value: The value of the input [J/kg].
+        :return: Mass specific internal energy for the input.
         """
         return cls(CoolProp.iUmass, value)
 
@@ -75,11 +62,8 @@ class Input(AbstractInput):
         """
         Absolute pressure.
 
-        Args:
-            value (float): The value of the input [Pa].
-
-        Returns:
-            Input: Absolute pressure for the input.
+        :param value: The value of the input [Pa].
+        :return: Absolute pressure for the input.
         """
         return cls(CoolProp.iP, value)
 
@@ -88,11 +72,8 @@ class Input(AbstractInput):
         """
         Mass vapor quality.
 
-        Args:
-            value (float): The value of the input (from 0 to 1) [-].
-
-        Returns:
-            Input: Mass vapor quality for the input.
+        :param value: The value of the input (from 0 to 1) [-].
+        :return: Mass vapor quality for the input.
         """
         return cls(CoolProp.iQ, value)
 
@@ -101,10 +82,7 @@ class Input(AbstractInput):
         """
         Temperature.
 
-        Args:
-            value (float): The value of the input [°C].
-
-        Returns:
-            Input: Temperature for the input.
+        :param value: The value of the input [°C].
+        :return: Temperature for the input.
         """
         return cls(CoolProp.iT, value + 273.15)
