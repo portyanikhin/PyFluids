@@ -73,7 +73,7 @@ class TestFluidsList:
     def test_backend(self, fluid: FluidsList):
         if (
             fluid.fraction_min != 0
-            or fluid.fraction_max != 1
+            or fluid.fraction_max != 100
             or fluid.mix_type is Mix.Volume
         ):
             assert fluid.backend == "INCOMP"

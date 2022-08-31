@@ -72,10 +72,10 @@ class Input(AbstractInput):
         """
         Mass vapor quality.
 
-        :param value: The value of the input (from 0 to 1) [-].
+        :param value: The value of the input [%].
         :return: Mass vapor quality for the input.
         """
-        return cls(CoolProp.iQ, value)
+        return cls(CoolProp.iQ, value * 1e-2)
 
     @classmethod
     def temperature(cls, value: float) -> "Input":

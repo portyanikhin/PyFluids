@@ -437,10 +437,10 @@ class FluidsList(Enum):
 
     @property
     def fraction_min(self) -> float:
-        """Minimum possible fraction."""
-        return self.__fraction_min
+        """Minimum possible fraction [%]."""
+        return self.__fraction_min * 1e2
 
     @property
     def fraction_max(self) -> float:
-        """Maximum possible fraction."""
-        return self.__fraction_max
+        """Maximum possible fraction [%]."""
+        return self.__fraction_max * 1e2
