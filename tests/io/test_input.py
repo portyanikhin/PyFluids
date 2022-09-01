@@ -20,3 +20,19 @@ class TestInput:
     def test_inputs(self, coolprop_input: Input, coolprop_key: int, value: float):
         assert coolprop_input.coolprop_key == coolprop_key
         assert coolprop_input.value == value
+
+    def test_equals(self):
+        origin = Input.temperature(5)
+        same = Input.temperature(5)
+        other = Input.temperature(10)
+        assert origin == same
+        assert origin != other
+        assert origin != object()
+
+    def test_hash(self):
+        origin = Input.temperature(5)
+        same = Input.temperature(5)
+        other = Input.temperature(10)
+        assert hash(origin) == hash(same)
+        assert hash(origin) != hash(other)
+        assert hash(origin) != hash(object())
