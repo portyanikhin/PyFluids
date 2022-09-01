@@ -24,3 +24,19 @@ class TestInputHumidAir:
     ):
         assert coolprop_input.coolprop_key == coolprop_key
         assert coolprop_input.value == value
+
+    def test_equals(self):
+        origin = InputHumidAir.temperature(20)
+        same = InputHumidAir.temperature(20)
+        other = InputHumidAir.temperature(30)
+        assert origin == same
+        assert origin != other
+        assert origin != object()
+
+    def test_hash(self):
+        origin = InputHumidAir.temperature(20)
+        same = InputHumidAir.temperature(20)
+        other = InputHumidAir.temperature(30)
+        assert hash(origin) == hash(same)
+        assert hash(origin) != hash(other)
+        assert hash(origin) != hash(object())

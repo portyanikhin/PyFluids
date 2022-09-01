@@ -24,3 +24,12 @@ class AbstractInput(ABC):
     def value(self) -> float:
         """Input value in SI units."""
         return self.__value
+
+    def __eq__(self, other: "AbstractInput") -> bool:
+        return isinstance(other, AbstractInput) and hash(self) == hash(other)
+
+    def __ne__(self, other: "AbstractInput"):
+        return not self.__eq__(other)
+
+    def __hash__(self) -> int:
+        return hash((self.coolprop_key, self.value))
