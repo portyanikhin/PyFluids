@@ -44,66 +44,6 @@ class AbstractFluid(ABC):
         self.__triple_pressure: Optional[float] = None
         self.__triple_temperature: Optional[float] = None
 
-    @abstractmethod
-    def factory(self) -> "AbstractFluid":
-        """Returns a new fluid object with no defined state."""
-        raise NotImplementedError  # pragma: no cover
-
-    def clone(self) -> "AbstractFluid":
-        """Performs deep (full) copy of the fluid instance."""
-        return self.with_state(*self._inputs)
-
-    def with_state(self, first_input: Input, second_input: Input) -> "AbstractFluid":
-        """
-        Returns a new fluid object with defined state.
-
-        :param first_input: First input property.
-        :param second_input: Second input property.
-        :return: A new fluid object with defined state.
-        """
-        fluid = self.factory()
-        fluid.update(first_input, second_input)
-        return fluid
-
-    def update(self, first_input: Input, second_input: Input):
-        """
-        Update fluid state.
-
-        :param first_input: First input property.
-        :param second_input: Second input property.
-        :raises ValueError: If input is invalid.
-        """
-        if first_input.coolprop_key == second_input.coolprop_key:
-            raise ValueError("Need to define 2 unique inputs!")
-        self.reset()
-        self._backend.update(
-            *generate_update_pair(
-                first_input.coolprop_key,
-                first_input.value,
-                second_input.coolprop_key,
-                second_input.value,
-            )
-        )
-        self._inputs = [first_input, second_input]
-
-    def reset(self):
-        """Reset all non-trivial properties."""
-        self.__compressibility = None
-        self.__conductivity = None
-        self.__density = None
-        self.__dynamic_viscosity = None
-        self.__enthalpy = None
-        self.__entropy = None
-        self.__internal_energy = None
-        self.__phase = None
-        self.__prandtl = None
-        self.__pressure = None
-        self.__quality = None
-        self.__sound_speed = None
-        self.__specific_heat = None
-        self.__surface_tension = None
-        self.__temperature = None
-
     @property
     def compressibility(self) -> Optional[float]:
         """Compressibility factor [-]."""
@@ -296,6 +236,66 @@ class AbstractFluid(ABC):
             value = self._nullable_keyed_output(CoolProp.iT_triple)
             self.__triple_temperature = value - 273.15 if value is not None else None
         return self.__triple_temperature
+
+    @abstractmethod
+    def factory(self) -> "AbstractFluid":
+        """Returns a new fluid object with no defined state."""
+        raise NotImplementedError  # pragma: no cover
+
+    def clone(self) -> "AbstractFluid":
+        """Performs deep (full) copy of the fluid instance."""
+        return self.with_state(*self._inputs)
+
+    def with_state(self, first_input: Input, second_input: Input) -> "AbstractFluid":
+        """
+        Returns a new fluid object with defined state.
+
+        :param first_input: First input property.
+        :param second_input: Second input property.
+        :return: A new fluid object with defined state.
+        """
+        fluid = self.factory()
+        fluid.update(first_input, second_input)
+        return fluid
+
+    def update(self, first_input: Input, second_input: Input):
+        """
+        Update fluid state.
+
+        :param first_input: First input property.
+        :param second_input: Second input property.
+        :raises ValueError: If input is invalid.
+        """
+        if first_input.coolprop_key == second_input.coolprop_key:
+            raise ValueError("Need to define 2 unique inputs!")
+        self.reset()
+        self._backend.update(
+            *generate_update_pair(
+                first_input.coolprop_key,
+                first_input.value,
+                second_input.coolprop_key,
+                second_input.value,
+            )
+        )
+        self._inputs = [first_input, second_input]
+
+    def reset(self):
+        """Reset all non-trivial properties."""
+        self.__compressibility = None
+        self.__conductivity = None
+        self.__density = None
+        self.__dynamic_viscosity = None
+        self.__enthalpy = None
+        self.__entropy = None
+        self.__internal_energy = None
+        self.__phase = None
+        self.__prandtl = None
+        self.__pressure = None
+        self.__quality = None
+        self.__sound_speed = None
+        self.__specific_heat = None
+        self.__surface_tension = None
+        self.__temperature = None
 
     def isentropic_compression_to_pressure(self, pressure: float) -> "AbstractFluid":
         """
