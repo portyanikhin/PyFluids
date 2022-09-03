@@ -18,7 +18,7 @@ class Fluid(AbstractFluid):
         :raises ValueError: If fraction is invalid.
         """
         if fraction is not None and (
-            fraction < name.fraction_min or fraction > name.fraction_max
+            not name.fraction_min <= fraction <= name.fraction_max
         ):
             raise ValueError(
                 f"Invalid fraction value! It should be in "
@@ -31,7 +31,9 @@ class Fluid(AbstractFluid):
         super().__init__()
         self.__name = name
         self.__fraction = 100 if self.__name.pure else fraction
-        self._backend = AbstractState(self.__name.backend, self.__name.coolprop_name)
+        self._backend = AbstractState(
+            self.__name.coolprop_backend, self.__name.coolprop_name
+        )
         if not self.__name.pure:
             self.__set_fraction()
 

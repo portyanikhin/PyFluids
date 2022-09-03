@@ -395,7 +395,7 @@ class FluidsList(Enum):
     ):
         (
             self.__coolprop_name,
-            self.__backend,
+            self.__coolprop_backend,
             self.__pure,
             self.__mix_type,
             self.__fraction_min,
@@ -421,9 +421,9 @@ class FluidsList(Enum):
         return self.__coolprop_name
 
     @property
-    def backend(self) -> str:
+    def coolprop_backend(self) -> str:
         """Type of CoolProp backend."""
-        return self.__backend
+        return self.__coolprop_backend
 
     @property
     def pure(self) -> bool:
