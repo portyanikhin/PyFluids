@@ -323,7 +323,7 @@ class AbstractFluid(ABC):
         :return: The state of the fluid at the end of the process.
         :raises ValueError: If pressure or isentropic efficiency is invalid.
         """
-        if isentropic_efficiency <= 0 or isentropic_efficiency >= 100:
+        if not 0 < isentropic_efficiency < 100:
             raise ValueError("Invalid compressor isentropic efficiency!")
         return self.with_state(
             Input.pressure(pressure),
@@ -376,7 +376,7 @@ class AbstractFluid(ABC):
         :return: The state of the fluid at the end of the process.
         :raises ValueError: If pressure or isentropic efficiency is invalid.
         """
-        if isentropic_efficiency <= 0 or isentropic_efficiency >= 100:
+        if not 0 < isentropic_efficiency < 100:
             raise ValueError("Invalid expander isentropic efficiency!")
         return self.with_state(
             Input.pressure(pressure),
@@ -569,9 +569,7 @@ class AbstractFluid(ABC):
         try:
             value = self._keyed_output(coolprop_key)
             return (
-                None
-                if coolprop_key == CoolProp.iQ and (value < 0 or value > 1)
-                else value
+                None if coolprop_key == CoolProp.iQ and (not 0 <= value <= 1) else value
             )
         except ValueError:
             return None

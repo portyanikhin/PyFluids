@@ -76,9 +76,11 @@ class TestFluidsList:
             or fluid.fraction_max != 100
             or fluid.mix_type is Mix.Volume
         ):
-            assert fluid.backend == "INCOMP"
+            assert fluid.coolprop_backend == "INCOMP"
         else:
-            assert fluid.backend == "HEOS" or fluid.backend == "INCOMP"
+            assert (
+                fluid.coolprop_backend == "HEOS" or fluid.coolprop_backend == "INCOMP"
+            )
 
     @pytest.mark.parametrize("fluid", list(FluidsList))
     def test_pure(self, fluid: FluidsList):

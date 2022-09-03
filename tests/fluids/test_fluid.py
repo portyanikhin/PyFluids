@@ -201,14 +201,14 @@ class TestFluid:
                 self.pressure,
                 "T",
                 self.temperature + 273.15,
-                f"{self.fluid.name.backend}::{self.fluid.name.coolprop_name}-"
+                f"{self.fluid.name.coolprop_backend}::{self.fluid.name.coolprop_name}-"
                 f"{self.fluid.fraction}%"
-                if self.fluid.name.backend == "INCOMP"
+                if self.fluid.name.coolprop_backend == "INCOMP"
                 else self.fluid.name.coolprop_name,
             )
             if value is not None and output_key.startswith("T"):
                 value -= 273.15
-            elif output_key == "Q" and (value < 0 or value > 1):
+            elif output_key == "Q" and (not 0 <= value <= 1):
                 value = None
             return value
         except ValueError:
