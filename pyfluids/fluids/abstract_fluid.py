@@ -1,6 +1,5 @@
 import json
 from abc import ABC, abstractmethod
-from math import isinf, isnan
 from typing import Dict, List, Optional, Union
 
 import CoolProp
@@ -8,7 +7,7 @@ from CoolProp import AbstractState
 from CoolProp.CoolProp import generate_update_pair
 
 from ..enums import Phases
-from ..io import Input
+from ..io import Input, OutputsValidator
 
 
 class AbstractFluid(ABC):
@@ -583,8 +582,7 @@ class AbstractFluid(ABC):
             if cached_input is not None
             else self._backend.keyed_output(coolprop_key)
         )
-        if isinf(value) or isnan(value):
-            raise ValueError("Invalid or not defined state!")
+        OutputsValidator(value).validate()
         return value
 
     @abstractmethod
