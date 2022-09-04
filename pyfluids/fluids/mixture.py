@@ -114,10 +114,10 @@ class Mixture(AbstractFluid):
     def _is_valid_fluids_for_mixing(self, first: "Mixture", second: "Mixture") -> bool:
         raise NotImplementedError  # pragma: no cover
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: "Mixture") -> bool:
         return isinstance(other, Mixture) and hash(self) == hash(other)
 
-    def __ne__(self, other):
+    def __ne__(self, other: "Mixture") -> bool:
         return not self.__eq__(other)
 
     def __hash__(self) -> int:

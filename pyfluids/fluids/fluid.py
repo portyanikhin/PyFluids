@@ -67,10 +67,10 @@ class Fluid(AbstractFluid):
         else:
             self._backend.set_volu_fractions([self.__fraction * 1e-2])
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: "Fluid") -> bool:
         return isinstance(other, Fluid) and hash(self) == hash(other)
 
-    def __ne__(self, other):
+    def __ne__(self, other: "Fluid") -> bool:
         return not self.__eq__(other)
 
     def __hash__(self) -> int:
