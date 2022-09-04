@@ -27,6 +27,7 @@ A simple, full-featured, lightweight [CoolProp](http://www.coolprop.org) wrapper
     - [Humid air](#humid-air)
     - [Equality of instances](#equality-of-instances)
     - [Converting to a JSON string](#converting-to-a-json-string)
+    - [Converting to a Python dict](#converting-to-a-python-dict)
     - [Deep cloning](#deep-cloning)
     - [Adding other properties](#adding-other-properties)
     - [Adding other inputs](#adding-other-inputs)
