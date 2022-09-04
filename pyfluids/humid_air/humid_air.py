@@ -200,6 +200,245 @@ class HumidAir:
         self.__temperature = None
         self.__wet_bulb_temperature = None
 
+    def dry_cooling_to_temperature(
+        self, temperature: float, pressure_drop: float = 0
+    ) -> "HumidAir":
+        """
+        The process of cooling without dehumidification to a given temperature.
+
+        :param temperature: Temperature [°C].
+        :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If temperature or pressure drop is invalid.
+        """
+        return self.__dry_heat_transfer_to_temperature(temperature, True, pressure_drop)
+
+    def dry_cooling_to_enthalpy(
+        self, enthalpy: float, pressure_drop: float = 0
+    ) -> "HumidAir":
+        """
+        The process of cooling without dehumidification to a given enthalpy.
+
+        :param enthalpy: Enthalpy [J/kg].
+        :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If enthalpy or pressure drop is invalid.
+        """
+        return self.__dry_heat_transfer_to_enthalpy(enthalpy, True, pressure_drop)
+
+    def wet_cooling_to_temperature_and_relative_humidity(
+        self, temperature: float, relative_humidity: float, pressure_drop: float = 0
+    ) -> "HumidAir":
+        """
+        The process of cooling with dehumidification
+        to a given temperature and relative humidity ratio.
+
+        :param temperature: Temperature [°C].
+        :param relative_humidity: Relative humidity ratio [%].
+        :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If temperature, relative humidity ratio or
+            pressure drop is invalid.
+        """
+        return self.__wet_cooling_to(
+            InputHumidAir.temperature(temperature),
+            InputHumidAir.relative_humidity(relative_humidity),
+            pressure_drop,
+        )
+
+    def wet_cooling_to_temperature_and_absolute_humidity(
+        self, temperature: float, humidity: float, pressure_drop: float = 0
+    ) -> "HumidAir":
+        """
+        The process of cooling with dehumidification
+        to a given temperature and absolute humidity ratio.
+
+        :param temperature: Temperature [°C].
+        :param humidity: Absolute humidity ratio [kg/kg d.a.].
+        :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If temperature, absolute humidity ratio or
+            pressure drop is invalid.
+        """
+        return self.__wet_cooling_to(
+            InputHumidAir.temperature(temperature),
+            InputHumidAir.humidity(humidity),
+            pressure_drop,
+        )
+
+    def wet_cooling_to_enthalpy_and_relative_humidity(
+        self, enthalpy: float, relative_humidity: float, pressure_drop: float = 0
+    ) -> "HumidAir":
+        """
+        The process of cooling with dehumidification
+        to a given enthalpy and relative humidity ratio.
+
+        :param enthalpy: Enthalpy [J/kg].
+        :param relative_humidity: Relative humidity ratio [%].
+        :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If enthalpy, relative humidity ratio or
+            pressure drop is invalid.
+        """
+        return self.__wet_cooling_to(
+            InputHumidAir.enthalpy(enthalpy),
+            InputHumidAir.relative_humidity(relative_humidity),
+            pressure_drop,
+        )
+
+    def wet_cooling_to_enthalpy_and_absolute_humidity(
+        self, enthalpy: float, humidity: float, pressure_drop: float = 0
+    ) -> "HumidAir":
+        """
+        The process of cooling with dehumidification
+        to a given enthalpy and absolute humidity ratio.
+
+        :param enthalpy: Enthalpy [J/kg].
+        :param humidity: Absolute humidity ratio [kg/kg d.a.].
+        :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If enthalpy, absolute humidity ratio or
+            pressure drop is invalid.
+        """
+        return self.__wet_cooling_to(
+            InputHumidAir.enthalpy(enthalpy),
+            InputHumidAir.humidity(humidity),
+            pressure_drop,
+        )
+
+    def heating_to_temperature(
+        self, temperature: float, pressure_drop: float = 0
+    ) -> "HumidAir":
+        """
+        The process of heating to a given temperature.
+
+        :param temperature: Temperature [°C].
+        :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If temperature or pressure drop is invalid.
+        """
+        return self.__dry_heat_transfer_to_temperature(
+            temperature, False, pressure_drop
+        )
+
+    def heating_to_enthalpy(
+        self, enthalpy: float, pressure_drop: float = 0
+    ) -> "HumidAir":
+        """
+        The process of heating to a given enthalpy.
+
+        :param enthalpy: Enthalpy [J/kg].
+        :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If enthalpy or pressure drop is invalid.
+        """
+        return self.__dry_heat_transfer_to_enthalpy(enthalpy, False, pressure_drop)
+
+    def humidification_by_water_to_relative_humidity(
+        self, relative_humidity: float
+    ) -> "HumidAir":
+        """
+        The process of humidification by water (isenthalpic)
+        to a given relative humidity ratio.
+
+        :param relative_humidity: Relative humidity ratio [%].
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If relative humidity ratio is invalid.
+        """
+        return self.__humidification_to(
+            InputHumidAir.enthalpy(self.enthalpy),
+            InputHumidAir.relative_humidity(relative_humidity),
+        )
+
+    def humidification_by_water_to_absolute_humidity(
+        self, humidity: float
+    ) -> "HumidAir":
+        """
+        The process of humidification by water (isenthalpic)
+        to a given absolute humidity ratio.
+
+        :param humidity: Absolute humidity ratio [kg/kg d.a.].
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If absolute humidity ratio is invalid.
+        """
+        return self.__humidification_to(
+            InputHumidAir.enthalpy(self.enthalpy),
+            InputHumidAir.humidity(humidity),
+        )
+
+    def humidification_by_steam_to_relative_humidity(
+        self, relative_humidity: float
+    ) -> "HumidAir":
+        """
+        The process of humidification by steam (isothermal)
+        to a given relative humidity ratio.
+
+        :param relative_humidity: Relative humidity ratio [%].
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If relative humidity ratio is invalid.
+        """
+        return self.__humidification_to(
+            InputHumidAir.temperature(self.temperature),
+            InputHumidAir.relative_humidity(relative_humidity),
+        )
+
+    def humidification_by_steam_to_absolute_humidity(
+        self, humidity: float
+    ) -> "HumidAir":
+        """
+        The process of humidification by steam (isothermal)
+        to a given absolute humidity ratio.
+
+        :param humidity: Absolute humidity ratio [kg/kg d.a.].
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If absolute humidity ratio is invalid.
+        """
+        return self.__humidification_to(
+            InputHumidAir.temperature(self.temperature),
+            InputHumidAir.humidity(humidity),
+        )
+
+    def mixing(
+        self,
+        first_specific_mass_flow: float,
+        first: "HumidAir",
+        second_specific_mass_flow: float,
+        second: "HumidAir",
+    ) -> "HumidAir":
+        """
+        The mixing process.
+
+        :param first_specific_mass_flow: Specific mass flow rate of the humid air
+            at the first state [-].
+        :param first: Humid air at the first state.
+        :param second_specific_mass_flow: Specific mass flow rate of the humid air
+            the second state [-].
+        :param second: Humid air at the second state.
+        :return: The state of the humid air at the end of the process.
+        :raises ValueError: If the mixing process is not possible.
+        """
+        if first.pressure != second.pressure:
+            raise ValueError(
+                "The mixing process is possible only for flows with the same pressure!"
+            )
+        return self.with_state(
+            InputHumidAir.pressure(first.pressure),
+            InputHumidAir.enthalpy(
+                (
+                    first_specific_mass_flow * first.enthalpy
+                    + second_specific_mass_flow * second.enthalpy
+                )
+                / (first_specific_mass_flow + second_specific_mass_flow)
+            ),
+            InputHumidAir.humidity(
+                (
+                    first_specific_mass_flow * first.humidity
+                    + second_specific_mass_flow * second.humidity
+                )
+                / (first_specific_mass_flow + second_specific_mass_flow)
+            ),
+        )
+
     def as_json(self, indented: bool = True) -> str:
         """
         Converts the humid air instance to a JSON string.
@@ -258,6 +497,112 @@ class HumidAir:
         unique_keys = set([i.coolprop_key for i in self._inputs])
         if len(self._inputs) != 3 or len(unique_keys) != 3:
             raise ValueError("Need to define 3 unique inputs!")
+
+    def __dry_heat_transfer_to_temperature(
+        self, temperature: float, cooling: bool, pressure_drop: float = 0
+    ) -> "HumidAir":
+        self.__check_temperature(temperature, cooling)
+        self.__check_dew_temperature(temperature)
+        self.__check_pressure_drop(pressure_drop)
+        return self.with_state(
+            InputHumidAir.pressure(self.pressure - pressure_drop),
+            InputHumidAir.temperature(temperature),
+            InputHumidAir.humidity(self.humidity),
+        )
+
+    def __dry_heat_transfer_to_enthalpy(
+        self, enthalpy: float, cooling: bool, pressure_drop: float = 0
+    ) -> "HumidAir":
+        self.__check_enthalpy(enthalpy, cooling)
+        self.__check_dew_enthalpy(enthalpy)
+        self.__check_pressure_drop(pressure_drop)
+        return self.with_state(
+            InputHumidAir.pressure(self.pressure - pressure_drop),
+            InputHumidAir.enthalpy(enthalpy),
+            InputHumidAir.humidity(self.humidity),
+        )
+
+    def __wet_cooling_to(
+        self,
+        first_input: InputHumidAir,
+        second_input: InputHumidAir,
+        pressure_drop: float = 0,
+    ):
+        if first_input.coolprop_key == "T":
+            self.__check_temperature(first_input.value - 273.15, True)
+        if first_input.coolprop_key == "Hha":
+            self.__check_enthalpy(first_input.value, True)
+        self.__check_pressure_drop(pressure_drop)
+        result = self.with_state(
+            InputHumidAir.pressure(self.pressure - pressure_drop),
+            first_input,
+            second_input,
+        )
+        if not result.humidity < self.humidity:
+            raise ValueError(
+                "During the wet cooling process, "
+                "the absolute humidity ratio should decrease!"
+            )
+        return result
+
+    def __humidification_to(
+        self, first_input: InputHumidAir, second_input: InputHumidAir
+    ) -> "HumidAir":
+        result = self.with_state(
+            InputHumidAir.pressure(self.pressure), first_input, second_input
+        )
+        if not result.humidity > self.humidity:
+            raise ValueError(
+                "During the humidification process, "
+                "the absolute humidity ratio should increase!"
+            )
+        return result
+
+    def __check_temperature(self, temperature: float, cooling: bool):
+        if cooling and temperature >= self.temperature:
+            raise ValueError(
+                "During the cooling process, the temperature should decrease!"
+            )
+        if not cooling and temperature <= self.temperature:
+            raise ValueError(
+                "During the heating process, the temperature should increase!"
+            )
+
+    def __check_enthalpy(self, enthalpy: float, cooling: bool):
+        if cooling and enthalpy >= self.enthalpy:
+            raise ValueError(
+                "During the cooling process, the enthalpy should decrease!"
+            )
+        if not cooling and enthalpy <= self.enthalpy:
+            raise ValueError(
+                "During the heating process, the enthalpy should increase!"
+            )
+
+    def __check_dew_temperature(self, temperature: float):
+        if temperature < self.dew_temperature:
+            raise ValueError(
+                "The outlet temperature after dry heat transfer "
+                "should be greater than the dew point temperature!"
+            )
+
+    def __check_dew_enthalpy(self, enthalpy: float):
+        if (
+            enthalpy
+            < self.with_state(
+                InputHumidAir.pressure(self.pressure),
+                InputHumidAir.temperature(self.dew_temperature),
+                InputHumidAir.relative_humidity(100),
+            ).enthalpy
+        ):
+            raise ValueError(
+                "The outlet enthalpy after dry heat transfer "
+                "should be greater than the dew point enthalpy!"
+            )
+
+    @staticmethod
+    def __check_pressure_drop(pressure_drop: float):
+        if pressure_drop < 0:
+            raise ValueError("Invalid pressure drop in the heat exchanger!")
 
     @staticmethod
     def __select(key: str) -> str:
