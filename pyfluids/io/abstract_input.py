@@ -28,7 +28,7 @@ class AbstractInput(ABC):
     def __eq__(self, other: "AbstractInput") -> bool:
         return isinstance(other, AbstractInput) and hash(self) == hash(other)
 
-    def __ne__(self, other: "AbstractInput"):
+    def __ne__(self, other: "AbstractInput") -> bool:
         return not self.__eq__(other)
 
     def __hash__(self) -> int:

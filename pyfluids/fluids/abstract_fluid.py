@@ -253,6 +253,7 @@ class AbstractFluid(ABC):
         :param first_input: First input property.
         :param second_input: Second input property.
         :return: A new fluid object with defined state.
+        :raises ValueError: If input is invalid.
         """
         fluid = self.factory()
         fluid.update(first_input, second_input)
@@ -279,6 +280,7 @@ class AbstractFluid(ABC):
         )
         self._inputs = [first_input, second_input]
 
+    # noinspection DuplicatedCode
     def reset(self):
         """Reset all non-trivial properties."""
         self.__compressibility = None
