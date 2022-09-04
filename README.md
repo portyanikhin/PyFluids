@@ -7,4 +7,4 @@
 [![License](https://img.shields.io/github/license/portyanikhin/PyFluids)](https://github.com/portyanikhin/PyFluids/blob/master/LICENSE)
 [![codecov](https://codecov.io/gh/portyanikhin/PyFluids/branch/main/graph/badge.svg?token=I1LL66AOJW)](https://codecov.io/gh/portyanikhin/PyFluids)
 
-A simple, full-featured, lightweight CoolProp wrapper for Python.
+A simple, full-featured, lightweight [CoolProp](http://www.coolprop.org) wrapper for Python.
