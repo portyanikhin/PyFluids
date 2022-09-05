@@ -3,11 +3,21 @@ import os
 from setuptools import setup, find_packages
 
 NAME = "pyfluids"
-VERSION = "2.0.0"
+VERSION = "2.0.1"
 DESCRIPTION = "A simple, full-featured, lightweight CoolProp wrapper for Python"
-here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(here, "PyPI.md")) as file:
-    LONG_DESCRIPTION = file.read()
+LONG_DESCRIPTION = """# ![PyFluids](https://raw.githubusercontent.com/portyanikhin/PyFluids/main/pictures/header.png)
+
+[![Build & Tests](https://github.com/portyanikhin/PyFluids/actions/workflows/build-tests.yml/badge.svg)](https://github.com/portyanikhin/PyFluids/actions/workflows/build-tests.yml)
+[![CodeQL](https://github.com/portyanikhin/PyFluids/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/portyanikhin/PyFluids/actions/workflows/codeql-analysis.yml)
+[![PyPI](https://img.shields.io/pypi/v/pyfluids)](https://pypi.org/project/pyfluids/)
+[![Python](https://img.shields.io/pypi/pyversions/pyfluids)](https://pypi.org/project/pyfluids/)
+[![License](https://img.shields.io/github/license/portyanikhin/PyFluids)](https://github.com/portyanikhin/PyFluids/blob/master/LICENSE)
+[![codecov](https://codecov.io/gh/portyanikhin/PyFluids/branch/main/graph/badge.svg?token=I1LL66AOJW)](https://codecov.io/gh/portyanikhin/PyFluids)
+
+A simple, full-featured, lightweight [CoolProp](http://www.coolprop.org) wrapper for Python.
+
+_**See [full documentation](https://github.com/portyanikhin/PyFluids).**_
+"""
 LONG_DESCRIPTION_CONTENT_TYPE = "text/markdown"
 AUTHOR = "Vladimir Portyanikhin"
 AUTHOR_EMAIL = "v.portyanikhin@ya.ru"
@@ -53,6 +63,7 @@ KEYWORDS = [
     "thermodynamics",
 ]
 PLATFORMS = ["MacOS", "Windows", "Linux", "Unix"]
+here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, "requirements.txt")) as file:
     INSTALL_REQUIRES = [
         i for i in file.read().splitlines() if not i.startswith("pytest")
