@@ -1,4 +1,4 @@
-name: Publish package to PyPI
+name: Publish to PyPI
 
 on:
   release:
@@ -8,8 +8,8 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
-    name: Deploy
+  publish:
+    name: Publish to PyPI
     runs-on: ubuntu-20.04
 
     steps:
@@ -24,7 +24,7 @@ jobs:
         pip install -r requirements.txt
         pip install build
     - name: Build package
-      run: python -m build
+      run: python -m build --sdist
     - name: Publish package to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
