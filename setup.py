@@ -3,7 +3,7 @@ import os
 from setuptools import setup, find_packages
 
 NAME = "pyfluids"
-VERSION = "2.1.0"
+VERSION = "2.2.0"
 DESCRIPTION = "A simple, full-featured, lightweight CoolProp wrapper for Python"
 here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, "PyPI.md")) as file:
