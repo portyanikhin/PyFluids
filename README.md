@@ -210,17 +210,17 @@ print(mixture.density)  # 883.3922771627963
 ### Humid air
 
 To calculate the wet bulb temperature of humid air 
-at _99 kPa_, _30 °C_ and _50 %_ relative humidity:
+at _300 m_ above sea level, _30 °C_ and _50 %_ relative humidity:
 
 ```python
 from pyfluids import HumidAir, InputHumidAir
 
 humid_air = HumidAir().with_state(
-    InputHumidAir.pressure(99e3),
+    InputHumidAir.altitude(300),
     InputHumidAir.temperature(30),
     InputHumidAir.relative_humidity(50),
 )
-print(humid_air.wet_bulb_temperature)  # 21.946578559079228
+print(humid_air.wet_bulb_temperature)  # 21.917569033181564
 ```
 
 ### Equality of instances

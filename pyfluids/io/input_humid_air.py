@@ -16,6 +16,20 @@ class InputHumidAir(AbstractInput):
         super().__init__(coolprop_key, value)
 
     @classmethod
+    def altitude(cls, value: float) -> "InputHumidAir":
+        """
+        Altitude above sea level humid air unit.
+
+        :param value: The value of the input [m].
+        :return: Altitude above sea level for the input.
+        """
+        if not -5000 <= value <= 11000:
+            raise ValueError(
+                "Altitude above sea level should be between -5000 and 11000 meters!"
+            )
+        return cls("P", 101325 * (1 - 2.25577e-5 * value) ** 5.2559)
+
+    @classmethod
     def density(cls, value: float) -> "InputHumidAir":
         """
         Mass density per humid air unit.
