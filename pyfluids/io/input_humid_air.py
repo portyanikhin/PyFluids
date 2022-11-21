@@ -18,10 +18,15 @@ class InputHumidAir(AbstractInput):
     @classmethod
     def altitude(cls, value: float) -> "InputHumidAir":
         """
-        Altitude above sea level humid air unit.
+        Altitude above sea level.
+
+        The pressure will be calculated by altitude above sea level according to
+        ASHRAE Fundamentals Handbook.
 
         :param value: The value of the input [m].
         :return: Altitude above sea level for the input.
+        :raises ValueError: If altitude above sea level is not between
+            -5000 and 11000 meters.
         """
         if not -5000 <= value <= 11000:
             raise ValueError(
