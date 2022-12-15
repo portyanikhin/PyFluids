@@ -6,7 +6,7 @@ __all__ = ["Phases"]
 
 
 class Phases(Enum):
-    """Fluids and mixtures phase states."""
+    """Phase states of fluids and mixtures."""
 
     Liquid = CoolProp.iphase_liquid
     Supercritical = CoolProp.iphase_supercritical

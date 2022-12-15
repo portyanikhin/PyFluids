@@ -6,14 +6,14 @@ __all__ = ["FluidsList"]
 
 
 class FluidsList(Enum):
-    """
-    List of CoolProp fluids:
+    """List of CoolProp fluids.
 
-    http://www.coolprop.org/fluid_properties/PurePseudoPure.html
-
-    http://www.coolprop.org/fluid_properties/Incompressibles.html
-
-    http://www.coolprop.org/coolprop/HighLevelAPI.html#predefined-mixtures
+    See more info about CoolProp `pure and pseudo-pure fluids
+    <http://www.coolprop.org/fluid_properties/PurePseudoPure.html>`_,
+    `incompressible fluids
+    <http://www.coolprop.org/fluid_properties/Incompressibles.html>`_
+    and `predefined mixtures
+    <http://www.coolprop.org/coolprop/HighLevelAPI.html#predefined-mixtures>`_.
     """
 
     # Pure and pseudo-pure fluids
