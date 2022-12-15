@@ -33,6 +33,7 @@ CLASSIFIERS = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: Implementation",
     "Programming Language :: Python :: Implementation :: PyPy",
     "Topic :: Education",
@@ -57,7 +58,7 @@ with open(os.path.join(here, "requirements.txt")) as file:
     INSTALL_REQUIRES = [
         i for i in file.read().splitlines() if not i.startswith("pytest")
     ]
-PYTHON_REQUIRES = ">=3.7, <3.11"
+PYTHON_REQUIRES = ">=3.7, <3.12"
 
 
 setup(
