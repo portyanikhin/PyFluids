@@ -6,6 +6,7 @@
 [![Python](https://img.shields.io/pypi/pyversions/pyfluids)](https://pypi.org/project/pyfluids/)
 [![License](https://img.shields.io/github/license/portyanikhin/PyFluids)](https://github.com/portyanikhin/PyFluids/blob/master/LICENSE)
 [![codecov](https://codecov.io/gh/portyanikhin/PyFluids/branch/main/graph/badge.svg?token=I1LL66AOJW)](https://codecov.io/gh/portyanikhin/PyFluids)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-black)](https://github.com/psf/black)
 
 A simple, full-featured, lightweight [CoolProp](http://www.coolprop.org) wrapper for Python.
 
@@ -42,11 +43,11 @@ pip install pyfluids
 
 ## Project structure
 
-* `Fluid` class - for pure fluids and binary mixtures.
-* `Mixture` class - for mixtures with pure fluids components.
+* `Fluid` class - implementation of pure fluids and binary mixtures.
+* `Mixture` class - implementation of mixtures with pure fluids components.
 * `FluidsList` enum - list of all available fluids.
 * `Input` class - inputs for the `Fluid` and `Mixture` classes.
-* `HumidAir` class - for humid air.
+* `HumidAir` class - implementation of real humid air.
 * `InputHumidAir` class - inputs for the `HumidAir` class.
 
 ## List of properties
@@ -64,7 +65,7 @@ the `Fluid`, `Mixture` or `HumidAir` classes (see [how to add other properties](
 * `dynamic_viscosity` - dynamic viscosity _(Pa*s)_.
 * `enthalpy` - mass specific enthalpy _(J/kg)_.
 * `entropy` - mass specific entropy _(J/kg/K)_.
-* `freezing_temperature` - temperature at freezing point (for incompressible fluids) _(°C)_.
+* `freezing_temperature` - temperature at the freezing point (for incompressible fluids) _(°C)_.
 * `internal_energy` - mass specific internal energy _(J/kg)_.
 * `kinematic_viscosity` - kinematic viscosity _(m2/s)_.
 * `max_pressure` - maximum pressure limit _(Pa)_.
@@ -108,10 +109,10 @@ For more information, see the docstrings.
 
 ### Methods of `Fluid` instances
 
-* `factory` - returns a new fluid object with no defined state.
-* `with_state` - returns a new fluid object with a defined state.
-* `update` - update fluid state.
-* `reset` - reset all non-trivial properties.
+* `factory` - returns a new fluid instance with no defined state.
+* `with_state` - returns a new fluid instance with a defined state.
+* `update` - updates the state of the fluid.
+* `reset` - resets all non-trivial properties.
 * `clone` - performs deep (full) copy of the fluid instance.
 * `isentropic_compression_to_pressure` - the process of isentropic compression to a given pressure.
 * `compression_to_pressure` - the process of compression to a given pressure.
@@ -133,10 +134,10 @@ For more information, see the docstrings.
 
 ### Methods of `Mixture` instances
 
-* `factory` - returns a new fluid object with no defined state.
-* `with_state` - returns a new fluid object with a defined state.
-* `update` - update fluid state.
-* `reset` - reset all non-trivial properties.
+* `factory` - returns a new mixture instance with no defined state.
+* `with_state` - returns a new mixture instance with a defined state.
+* `update` - updates the state of the mixture.
+* `reset` - resets all non-trivial properties.
 * `clone` - performs deep (full) copy of the mixture instance.
 * `cooling_to_temperature` - the process of cooling to a given temperature.
 * `heating_to_temperature` - the process of heating to a given temperature.
@@ -145,10 +146,10 @@ For more information, see the docstrings.
 
 ### Methods of `HumidAir` instances
 
-* `factory` - returns a new humid air object with no defined state.
-* `with_state` - returns a new humid air object with a defined state.
-* `update` - update humid air state.
-* `reset` - reset all properties.
+* `factory` - returns a new humid air instance with no defined state.
+* `with_state` - returns a new humid air instance with a defined state.
+* `update` - updates the state of the humid air.
+* `reset` - resets all properties.
 * `clone` - performs deep (full) copy of the humid air instance.
 * `dry_cooling_to_temperature` - the process of cooling without dehumidification to a given temperature.
 * `dry_cooling_to_enthalpy` - the process of cooling without dehumidification to a given enthalpy.

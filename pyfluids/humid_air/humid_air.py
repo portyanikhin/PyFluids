@@ -9,10 +9,10 @@ __all__ = ["HumidAir"]
 
 
 class HumidAir:
-    """Implementation of the humid air."""
+    """Real humid air (see ASHRAE RP-1485)."""
 
     def __init__(self):
-        """Implementation of the humid air."""
+        """Real humid air (see ASHRAE RP-1485)."""
         self._inputs: List[InputHumidAir] = []
         self.__compressibility: Optional[float] = None
         self.__conductivity: Optional[float] = None
@@ -138,7 +138,7 @@ class HumidAir:
         return self.__wet_bulb_temperature
 
     def factory(self) -> "HumidAir":
-        """Returns a new humid air object with no defined state."""
+        """Returns a new humid air instance with no defined state."""
         return HumidAir()
 
     def clone(self) -> "HumidAir":
@@ -152,12 +152,12 @@ class HumidAir:
         third_input: InputHumidAir,
     ) -> "HumidAir":
         """
-        Returns a new humid air object with a defined state.
+        Returns a new humid air instance with a defined state.
 
         :param first_input: First input property.
         :param second_input: Second input property.
         :param third_input: Third input property.
-        :return: A new humid air object with a defined state.
+        :return: A new humid air instance with a defined state.
         :raises ValueError: If input is invalid.
         """
         humid_air = self.factory()
@@ -171,7 +171,7 @@ class HumidAir:
         third_input: InputHumidAir,
     ):
         """
-        Update humid air state.
+        Updates the state of the humid air.
 
         :param first_input: First input property.
         :param second_input: Second input property.
@@ -184,7 +184,7 @@ class HumidAir:
 
     # noinspection DuplicatedCode
     def reset(self):
-        """Reset all properties."""
+        """Resets all properties."""
         self.__compressibility = None
         self.__conductivity = None
         self.__density = None

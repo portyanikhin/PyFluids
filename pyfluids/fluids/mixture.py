@@ -9,13 +9,13 @@ __all__ = ["Mixture"]
 
 
 class Mixture(AbstractFluid):
-    """CoolProp mass-based mixture of pure fluids."""
+    """Mass-based mixture of pure fluids."""
 
     def __init__(self, fluids: List[FluidsList], fractions: List[float]):
         """
-        CoolProp mass-based mixture of pure fluids.
+        Mass-based mixture of pure fluids.
 
-        :param fluids: List of selected pure fluids.
+        :param fluids: List of selected names of pure fluids.
         :param fractions: List of mass-based fractions [%].
         :raises ValueError: If fluids or fractions are invalid.
         """

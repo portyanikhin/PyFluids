@@ -7,13 +7,13 @@ __all__ = ["Fluid"]
 
 
 class Fluid(AbstractFluid):
-    """CoolProp pure/pseudo-pure fluid or binary mixture."""
+    """Pure/pseudo-pure fluid or binary mixture."""
 
     def __init__(self, name: FluidsList, fraction: float = None):
         """
-        CoolProp pure/pseudo-pure fluid or binary mixture.
+        Pure/pseudo-pure fluid or binary mixture.
 
-        :param name: Selected fluid.
+        :param name: Selected fluid name.
         :param fraction: Mass-based or volume-based fraction for binary mixtures [%].
         :raises ValueError: If fraction is invalid.
         """
@@ -42,7 +42,7 @@ class Fluid(AbstractFluid):
 
     @property
     def name(self) -> FluidsList:
-        """Selected fluid."""
+        """Selected fluid name."""
         return self.__name
 
     @property

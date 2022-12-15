@@ -103,7 +103,7 @@ class AbstractFluid(ABC):
 
     @property
     def freezing_temperature(self) -> Optional[float]:
-        """Temperature at freezing point (for incompressible fluids) [°C]."""
+        """Temperature at the freezing point (for incompressible fluids) [°C]."""
         if self.__freezing_temperature is None:
             value = self._nullable_keyed_output(CoolProp.iT_freeze)
             self.__freezing_temperature = value - 273.15 if value is not None else None
@@ -239,7 +239,7 @@ class AbstractFluid(ABC):
 
     @abstractmethod
     def factory(self) -> "AbstractFluid":
-        """Returns a new fluid object with no defined state."""
+        """Returns a new fluid instance with no defined state."""
         raise NotImplementedError  # pragma: no cover
 
     def clone(self) -> "AbstractFluid":
@@ -248,11 +248,11 @@ class AbstractFluid(ABC):
 
     def with_state(self, first_input: Input, second_input: Input) -> "AbstractFluid":
         """
-        Returns a new fluid object with defined state.
+        Returns a new fluid instance with a defined state.
 
         :param first_input: First input property.
         :param second_input: Second input property.
-        :return: A new fluid object with defined state.
+        :return: A new fluid instance with a defined state.
         :raises ValueError: If input is invalid.
         """
         fluid = self.factory()
@@ -261,7 +261,7 @@ class AbstractFluid(ABC):
 
     def update(self, first_input: Input, second_input: Input):
         """
-        Update fluid state.
+        Updates the state of the fluid.
 
         :param first_input: First input property.
         :param second_input: Second input property.
@@ -282,7 +282,7 @@ class AbstractFluid(ABC):
 
     # noinspection DuplicatedCode
     def reset(self):
-        """Reset all non-trivial properties."""
+        """Resets all non-trivial properties."""
         self.__compressibility = None
         self.__conductivity = None
         self.__density = None
