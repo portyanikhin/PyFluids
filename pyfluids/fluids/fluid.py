@@ -50,8 +50,28 @@ class Fluid(AbstractFluid):
         """Mass-based or volume-based fraction for binary mixtures [%]."""
         return self.__fraction
 
-    def _is_valid_fluids_for_mixing(self, first: "Fluid", second: "Fluid") -> bool:
-        """Check if two fluids can be mixed."""
+    def mixing(
+        self,
+        first_specific_mass_flow: float,
+        first: AbstractFluid,
+        second_specific_mass_flow: float,
+        second: AbstractFluid,
+    ) -> AbstractFluid:
+        if not self.__is_valid_fluids_for_mixing(first, second):
+            raise ValueError("The mixing process is possible only for the same fluids!")
+        return super().mixing(
+            first_specific_mass_flow, first, second_specific_mass_flow, second
+        )
+
+    def __set_fraction(self):
+        if self.__name.mix_type == Mix.Mass:
+            self._backend.set_mass_fractions([self.__fraction * 1e-2])
+        else:
+            self._backend.set_volu_fractions([self.__fraction * 1e-2])
+
+    def __is_valid_fluids_for_mixing(
+        self, first: AbstractFluid, second: AbstractFluid
+    ) -> bool:
         return (
             isinstance(first, Fluid)
             and isinstance(second, Fluid)
@@ -60,12 +80,6 @@ class Fluid(AbstractFluid):
             and first.fraction == self.__fraction
             and first.fraction == second.fraction
         )
-
-    def __set_fraction(self):
-        if self.__name.mix_type == Mix.Mass:
-            self._backend.set_mass_fractions([self.__fraction * 1e-2])
-        else:
-            self._backend.set_volu_fractions([self.__fraction * 1e-2])
 
     def __eq__(self, other: "Fluid") -> bool:
         return isinstance(other, Fluid) and hash(self) == hash(other)
