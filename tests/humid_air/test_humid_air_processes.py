@@ -4,30 +4,18 @@ from pyfluids import HumidAir, InputHumidAir
 
 
 class TestHumidAirProcesses:
-    humid_air = HumidAir().with_state(
+    humid_air: HumidAir = HumidAir().with_state(
         InputHumidAir.pressure(101325),
         InputHumidAir.temperature(20),
         InputHumidAir.relative_humidity(50),
     )
-
-    temperature_delta = 5
-    enthalpy_delta = 5e3
-    pressure_drop = 200
-    low_humidity = 5e-3
-    high_humidity = 9e-3
-    low_relative_humidity = 45
-    high_relative_humidity = 95
-
-    def test_dry_cooling_to_temperature(self):
-        assert self.humid_air.dry_cooling_to_temperature(
-            self.humid_air.temperature - self.temperature_delta, self.pressure_drop
-        ) == self.humid_air.with_state(
-            InputHumidAir.pressure(self.humid_air.pressure - self.pressure_drop),
-            InputHumidAir.temperature(
-                self.humid_air.temperature - self.temperature_delta
-            ),
-            InputHumidAir.humidity(self.humid_air.humidity),
-        )
+    temperature_delta: float = 5
+    enthalpy_delta: float = 5e3
+    pressure_drop: float = 200
+    low_humidity: float = 5e-3
+    high_humidity: float = 9e-3
+    low_relative_humidity: float = 45
+    high_relative_humidity: float = 95
 
     @pytest.mark.parametrize(
         "temperature, pressure_drop, message",
@@ -42,19 +30,21 @@ class TestHumidAirProcesses:
             (15, -100, "Invalid pressure drop in the heat exchanger!"),
         ],
     )
-    def test_dry_cooling_to_temperature_wrong_input(
+    def test_dry_cooling_to_temperature_wrong_input_raises_value_error(
         self, temperature: float, pressure_drop: float, message: str
     ):
         with pytest.raises(ValueError) as e:
             self.humid_air.dry_cooling_to_temperature(temperature, pressure_drop)
         assert message in str(e.value)
 
-    def test_dry_cooling_to_enthalpy(self):
-        assert self.humid_air.dry_cooling_to_enthalpy(
-            self.humid_air.enthalpy - self.enthalpy_delta, self.pressure_drop
+    def test_dry_cooling_to_temperature(self):
+        assert self.humid_air.dry_cooling_to_temperature(
+            self.humid_air.temperature - self.temperature_delta, self.pressure_drop
         ) == self.humid_air.with_state(
             InputHumidAir.pressure(self.humid_air.pressure - self.pressure_drop),
-            InputHumidAir.enthalpy(self.humid_air.enthalpy - self.enthalpy_delta),
+            InputHumidAir.temperature(
+                self.humid_air.temperature - self.temperature_delta
+            ),
             InputHumidAir.humidity(self.humid_air.humidity),
         )
 
@@ -71,24 +61,20 @@ class TestHumidAirProcesses:
             (3e4, -100, "Invalid pressure drop in the heat exchanger!"),
         ],
     )
-    def test_dry_cooling_to_enthalpy_wrong_input(
+    def test_dry_cooling_to_enthalpy_wrong_input_raises_value_error(
         self, enthalpy: float, pressure_drop: float, message: str
     ):
         with pytest.raises(ValueError) as e:
             self.humid_air.dry_cooling_to_enthalpy(enthalpy, pressure_drop)
         assert message in str(e.value)
 
-    def test_wet_cooling_to_temperature_and_relative_humidity(self):
-        assert self.humid_air.wet_cooling_to_temperature_and_relative_humidity(
-            self.humid_air.temperature - self.temperature_delta,
-            self.low_relative_humidity,
-            self.pressure_drop,
+    def test_dry_cooling_to_enthalpy(self):
+        assert self.humid_air.dry_cooling_to_enthalpy(
+            self.humid_air.enthalpy - self.enthalpy_delta, self.pressure_drop
         ) == self.humid_air.with_state(
             InputHumidAir.pressure(self.humid_air.pressure - self.pressure_drop),
-            InputHumidAir.temperature(
-                self.humid_air.temperature - self.temperature_delta
-            ),
-            InputHumidAir.relative_humidity(self.low_relative_humidity),
+            InputHumidAir.enthalpy(self.humid_air.enthalpy - self.enthalpy_delta),
+            InputHumidAir.humidity(self.humid_air.humidity),
         )
 
     @pytest.mark.parametrize(
@@ -105,7 +91,7 @@ class TestHumidAirProcesses:
             (15, 60, -100, "Invalid pressure drop in the heat exchanger!"),
         ],
     )
-    def test_wet_cooling_to_temperature_and_relative_humidity_wrong_input(
+    def test_wet_cooling_to_temperature_and_rel_humidity_wrong_input_raises_value_error(
         self,
         temperature: float,
         relative_humidity: float,
@@ -118,17 +104,17 @@ class TestHumidAirProcesses:
             )
         assert message in str(e.value)
 
-    def test_wet_cooling_to_temperature_and_absolute_humidity(self):
-        assert self.humid_air.wet_cooling_to_temperature_and_absolute_humidity(
+    def test_wet_cooling_to_temperature_and_rel_humidity(self):
+        assert self.humid_air.wet_cooling_to_temperature_and_relative_humidity(
             self.humid_air.temperature - self.temperature_delta,
-            self.low_humidity,
+            self.low_relative_humidity,
             self.pressure_drop,
         ) == self.humid_air.with_state(
             InputHumidAir.pressure(self.humid_air.pressure - self.pressure_drop),
             InputHumidAir.temperature(
                 self.humid_air.temperature - self.temperature_delta
             ),
-            InputHumidAir.humidity(self.low_humidity),
+            InputHumidAir.relative_humidity(self.low_relative_humidity),
         )
 
     @pytest.mark.parametrize(
@@ -150,7 +136,7 @@ class TestHumidAirProcesses:
             (15, 5e-3, -100, "Invalid pressure drop in the heat exchanger!"),
         ],
     )
-    def test_wet_cooling_to_temperature_and_absolute_humidity_wrong_input(
+    def test_wet_cooling_to_temperature_and_abs_humidity_wrong_input_raises_value_error(
         self,
         temperature: float,
         humidity: float,
@@ -163,15 +149,17 @@ class TestHumidAirProcesses:
             )
         assert message in str(e.value)
 
-    def test_wet_cooling_to_enthalpy_and_relative_humidity(self):
-        assert self.humid_air.wet_cooling_to_enthalpy_and_relative_humidity(
-            self.humid_air.enthalpy - self.enthalpy_delta,
-            self.low_relative_humidity,
+    def test_wet_cooling_to_temperature_and_abs_humidity(self):
+        assert self.humid_air.wet_cooling_to_temperature_and_absolute_humidity(
+            self.humid_air.temperature - self.temperature_delta,
+            self.low_humidity,
             self.pressure_drop,
         ) == self.humid_air.with_state(
             InputHumidAir.pressure(self.humid_air.pressure - self.pressure_drop),
-            InputHumidAir.enthalpy(self.humid_air.enthalpy - self.enthalpy_delta),
-            InputHumidAir.relative_humidity(self.low_relative_humidity),
+            InputHumidAir.temperature(
+                self.humid_air.temperature - self.temperature_delta
+            ),
+            InputHumidAir.humidity(self.low_humidity),
         )
 
     @pytest.mark.parametrize(
@@ -188,7 +176,7 @@ class TestHumidAirProcesses:
             (1.5e4, 60, -100, "Invalid pressure drop in the heat exchanger!"),
         ],
     )
-    def test_wet_cooling_to_enthalpy_and_relative_humidity_wrong_input(
+    def test_wet_cooling_to_enthalpy_and_rel_humidity_wrong_input_raises_value_error(
         self,
         enthalpy: float,
         relative_humidity: float,
@@ -201,15 +189,15 @@ class TestHumidAirProcesses:
             )
         assert message in str(e.value)
 
-    def test_wet_cooling_to_enthalpy_and_absolute_humidity(self):
-        assert self.humid_air.wet_cooling_to_enthalpy_and_absolute_humidity(
+    def test_wet_cooling_to_enthalpy_and_rel_humidity(self):
+        assert self.humid_air.wet_cooling_to_enthalpy_and_relative_humidity(
             self.humid_air.enthalpy - self.enthalpy_delta,
-            self.low_humidity,
+            self.low_relative_humidity,
             self.pressure_drop,
         ) == self.humid_air.with_state(
             InputHumidAir.pressure(self.humid_air.pressure - self.pressure_drop),
             InputHumidAir.enthalpy(self.humid_air.enthalpy - self.enthalpy_delta),
-            InputHumidAir.humidity(self.low_humidity),
+            InputHumidAir.relative_humidity(self.low_relative_humidity),
         )
 
     @pytest.mark.parametrize(
@@ -226,7 +214,7 @@ class TestHumidAirProcesses:
             (1.5e4, 5e-3, -100, "Invalid pressure drop in the heat exchanger!"),
         ],
     )
-    def test_wet_cooling_to_enthalpy_and_absolute_humidity_wrong_input(
+    def test_wet_cooling_to_enthalpy_and_abs_humidity_wrong_input_raises_value_error(
         self,
         enthalpy: float,
         humidity: float,
@@ -237,6 +225,31 @@ class TestHumidAirProcesses:
             self.humid_air.wet_cooling_to_enthalpy_and_absolute_humidity(
                 enthalpy, humidity, pressure_drop
             )
+        assert message in str(e.value)
+
+    def test_wet_cooling_to_enthalpy_and_abs_humidity(self):
+        assert self.humid_air.wet_cooling_to_enthalpy_and_absolute_humidity(
+            self.humid_air.enthalpy - self.enthalpy_delta,
+            self.low_humidity,
+            self.pressure_drop,
+        ) == self.humid_air.with_state(
+            InputHumidAir.pressure(self.humid_air.pressure - self.pressure_drop),
+            InputHumidAir.enthalpy(self.humid_air.enthalpy - self.enthalpy_delta),
+            InputHumidAir.humidity(self.low_humidity),
+        )
+
+    @pytest.mark.parametrize(
+        "temperature, pressure_drop, message",
+        [
+            (15, 0, "During the heating process, the temperature should increase!"),
+            (50, -100, "Invalid pressure drop in the heat exchanger!"),
+        ],
+    )
+    def test_heating_to_temperature_wrong_input_raises_value_error(
+        self, temperature: float, pressure_drop: float, message: str
+    ):
+        with pytest.raises(ValueError) as e:
+            self.humid_air.heating_to_temperature(temperature, pressure_drop)
         assert message in str(e.value)
 
     def test_heating_to_temperature(self):
@@ -251,17 +264,17 @@ class TestHumidAirProcesses:
         )
 
     @pytest.mark.parametrize(
-        "temperature, pressure_drop, message",
+        "enthalpy, pressure_drop, message",
         [
-            (15, 0, "During the heating process, the temperature should increase!"),
-            (50, -100, "Invalid pressure drop in the heat exchanger!"),
+            (1.5e4, 0, "During the heating process, the enthalpy should increase!"),
+            (5e4, -100, "Invalid pressure drop in the heat exchanger!"),
         ],
     )
-    def test_heating_to_temperature_wrong_input(
-        self, temperature: float, pressure_drop: float, message: str
+    def test_heating_to_enthalpy_wrong_input_raises_value_error(
+        self, enthalpy: float, pressure_drop: float, message: str
     ):
         with pytest.raises(ValueError) as e:
-            self.humid_air.heating_to_temperature(temperature, pressure_drop)
+            self.humid_air.heating_to_enthalpy(enthalpy, pressure_drop)
         assert message in str(e.value)
 
     def test_heating_to_enthalpy(self):
@@ -273,30 +286,9 @@ class TestHumidAirProcesses:
             InputHumidAir.humidity(self.humid_air.humidity),
         )
 
-    @pytest.mark.parametrize(
-        "enthalpy, pressure_drop, message",
-        [
-            (1.5e4, 0, "During the heating process, the enthalpy should increase!"),
-            (5e4, -100, "Invalid pressure drop in the heat exchanger!"),
-        ],
-    )
-    def test_heating_to_enthalpy_wrong_input(
-        self, enthalpy: float, pressure_drop: float, message: str
+    def test_humidification_by_water_to_wrong_rel_humidity_raises_value_error(
+        self,
     ):
-        with pytest.raises(ValueError) as e:
-            self.humid_air.heating_to_enthalpy(enthalpy, pressure_drop)
-        assert message in str(e.value)
-
-    def test_humidification_by_water_to_relative_humidity(self):
-        assert self.humid_air.humidification_by_water_to_relative_humidity(
-            self.high_relative_humidity
-        ) == self.humid_air.with_state(
-            InputHumidAir.pressure(self.humid_air.pressure),
-            InputHumidAir.enthalpy(self.humid_air.enthalpy),
-            InputHumidAir.relative_humidity(self.high_relative_humidity),
-        )
-
-    def test_humidification_by_water_to_relative_humidity_wrong_input(self):
         with pytest.raises(ValueError) as e:
             self.humid_air.humidification_by_water_to_relative_humidity(
                 self.low_relative_humidity
@@ -306,16 +298,16 @@ class TestHumidAirProcesses:
             "the absolute humidity ratio should increase!" in str(e.value)
         )
 
-    def test_humidification_by_water_to_absolute_humidity(self):
-        assert self.humid_air.humidification_by_water_to_absolute_humidity(
-            self.high_humidity
+    def test_humidification_by_water_to_rel_humidity(self):
+        assert self.humid_air.humidification_by_water_to_relative_humidity(
+            self.high_relative_humidity
         ) == self.humid_air.with_state(
             InputHumidAir.pressure(self.humid_air.pressure),
             InputHumidAir.enthalpy(self.humid_air.enthalpy),
-            InputHumidAir.humidity(self.high_humidity),
+            InputHumidAir.relative_humidity(self.high_relative_humidity),
         )
 
-    def test_humidification_by_water_to_absolute_humidity_wrong_input(self):
+    def test_humidification_by_water_to_wrong_abs_humidity_raises_value_error(self):
         with pytest.raises(ValueError) as e:
             self.humid_air.humidification_by_water_to_absolute_humidity(
                 self.low_humidity
@@ -325,16 +317,16 @@ class TestHumidAirProcesses:
             "the absolute humidity ratio should increase!" in str(e.value)
         )
 
-    def test_humidification_by_steam_to_relative_humidity(self):
-        assert self.humid_air.humidification_by_steam_to_relative_humidity(
-            self.high_relative_humidity
+    def test_humidification_by_water_to_abs_humidity(self):
+        assert self.humid_air.humidification_by_water_to_absolute_humidity(
+            self.high_humidity
         ) == self.humid_air.with_state(
             InputHumidAir.pressure(self.humid_air.pressure),
-            InputHumidAir.temperature(self.humid_air.temperature),
-            InputHumidAir.relative_humidity(self.high_relative_humidity),
+            InputHumidAir.enthalpy(self.humid_air.enthalpy),
+            InputHumidAir.humidity(self.high_humidity),
         )
 
-    def test_humidification_by_steam_to_relative_humidity_wrong_input(self):
+    def test_humidification_by_steam_to_wrong_rel_humidity_raises_value_error(self):
         with pytest.raises(ValueError) as e:
             self.humid_air.humidification_by_steam_to_relative_humidity(
                 self.low_relative_humidity
@@ -344,16 +336,16 @@ class TestHumidAirProcesses:
             "the absolute humidity ratio should increase!" in str(e.value)
         )
 
-    def test_humidification_by_steam_to_absolute_humidity(self):
-        assert self.humid_air.humidification_by_steam_to_absolute_humidity(
-            self.high_humidity
+    def test_humidification_by_steam_to_rel_humidity(self):
+        assert self.humid_air.humidification_by_steam_to_relative_humidity(
+            self.high_relative_humidity
         ) == self.humid_air.with_state(
             InputHumidAir.pressure(self.humid_air.pressure),
             InputHumidAir.temperature(self.humid_air.temperature),
-            InputHumidAir.humidity(self.high_humidity),
+            InputHumidAir.relative_humidity(self.high_relative_humidity),
         )
 
-    def test_humidification_by_steam_to_absolute_humidity_wrong_input(self):
+    def test_humidification_by_steam_to_wrong_abs_humidity_raises_value_error(self):
         with pytest.raises(ValueError) as e:
             self.humid_air.humidification_by_steam_to_absolute_humidity(
                 self.low_humidity
@@ -363,20 +355,16 @@ class TestHumidAirProcesses:
             "the absolute humidity ratio should increase!" in str(e.value)
         )
 
-    def test_mixing(self):
-        first = self.humid_air.heating_to_temperature(
-            self.humid_air.temperature + self.temperature_delta
-        )
-        second = self.humid_air.humidification_by_water_to_relative_humidity(
-            self.high_relative_humidity
-        )
-        assert self.humid_air.mixing(1, first, 2, second) == self.humid_air.with_state(
+    def test_humidification_by_steam_to_abs_humidity(self):
+        assert self.humid_air.humidification_by_steam_to_absolute_humidity(
+            self.high_humidity
+        ) == self.humid_air.with_state(
             InputHumidAir.pressure(self.humid_air.pressure),
-            InputHumidAir.enthalpy((1 * first.enthalpy + 2 * second.enthalpy) / 3),
-            InputHumidAir.humidity((1 * first.humidity + 2 * second.humidity) / 3),
+            InputHumidAir.temperature(self.humid_air.temperature),
+            InputHumidAir.humidity(self.high_humidity),
         )
 
-    def test_mixing_wrong_input(self):
+    def test_mixing_wrong_pressures_raises_value_error(self):
         first = self.humid_air.with_state(
             InputHumidAir.pressure(self.humid_air.pressure - self.pressure_drop),
             InputHumidAir.temperature(
@@ -392,4 +380,17 @@ class TestHumidAirProcesses:
         assert (
             "The mixing process is possible only for flows with the same pressure!"
             in str(e.value)
+        )
+
+    def test_mixing(self):
+        first = self.humid_air.heating_to_temperature(
+            self.humid_air.temperature + self.temperature_delta
+        )
+        second = self.humid_air.humidification_by_water_to_relative_humidity(
+            self.high_relative_humidity
+        )
+        assert self.humid_air.mixing(1, first, 2, second) == self.humid_air.with_state(
+            InputHumidAir.pressure(self.humid_air.pressure),
+            InputHumidAir.enthalpy((1 * first.enthalpy + 2 * second.enthalpy) / 3),
+            InputHumidAir.humidity((1 * first.humidity + 2 * second.humidity) / 3),
         )

@@ -5,17 +5,17 @@ from pyfluids import FluidsList, Mix
 
 class TestFluidsList:
     @pytest.mark.parametrize("fluid", list(FluidsList))
-    def test_repr(self, fluid: FluidsList):
+    def test_repr_always_returns_name(self, fluid: FluidsList):
         assert repr(fluid) == fluid.name
 
     @pytest.mark.parametrize("fluid", list(FluidsList))
-    def test_str(self, fluid: FluidsList):
+    def test_str_always_returns_name(self, fluid: FluidsList):
         assert str(fluid) == fluid.name
 
     @pytest.mark.parametrize("fluid", list(FluidsList))
-    def test_coolprop_name(self, fluid: FluidsList):
+    def test_coolprop_name_all_fluids_are_valid_for_coolprop(self, fluid: FluidsList):
         if fluid.coolprop_name.endswith(".mix"):
-            pass
+            return
         elif fluid is FluidsList.R50:
             assert fluid.coolprop_name == "Methane"
         elif fluid is FluidsList.RE143a:

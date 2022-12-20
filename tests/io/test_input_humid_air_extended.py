@@ -2,7 +2,7 @@ from pyfluids import InputHumidAir
 
 
 class InputHumidAirExtended(InputHumidAir):
-    """An example of how to extend InputHumidAir."""
+    """An example of how to extend the InputHumidAir class."""
 
     def __init__(self, coolprop_key: str, value: float):
         """
@@ -27,8 +27,8 @@ class InputHumidAirExtended(InputHumidAir):
 class TestInputHumidAirExtended:
     input_extended = InputHumidAirExtended.water_mole_fraction(5e-3)
 
-    def test_coolprop_key(self):
+    def test_coolprop_key_new_input_matches_with_coolprop(self):
         assert self.input_extended.coolprop_key == "psi_w"
 
-    def test_value(self):
+    def test_value_new_input_should_be_in_si_units(self):
         assert self.input_extended.value == 5e-3

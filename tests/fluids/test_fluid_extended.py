@@ -6,7 +6,7 @@ from pyfluids import Fluid, FluidsList, Input
 
 
 class FluidExtended(Fluid):
-    """An example of how to add new properties to a Fluid."""
+    """An example of how to add new properties to the Fluid class."""
 
     def __init__(self, name: FluidsList, fraction: float = None):
         super().__init__(name, fraction)
@@ -49,14 +49,14 @@ class FluidExtended(Fluid):
 
 class TestFluidExtended:
     fluid = FluidExtended(FluidsList.Water).with_state(
-        Input.pressure(101325), Input.temperature(150)
+        Input.pressure(101325), Input.temperature(20)
     )
 
-    def test_specific_heat_const_volume(self):
-        assert self.fluid.specific_heat_const_volume == 1496.5437531342086
+    def test_specific_heat_const_volume_water_in_standard_conditions_returns_4156(self):
+        assert self.fluid.specific_heat_const_volume == 4156.6814728615545
 
-    def test_molar_density(self):
-        assert self.fluid.molar_density == 29.045175781507989
+    def test_molar_density_water_in_standard_conditions_returns_55408(self):
+        assert self.fluid.molar_density == 55408.953697937126
 
-    def test_ozone_depletion_potential(self):
+    def test_ozone_depletion_potential_water_in_standard_conditions_returns_none(self):
         assert self.fluid.ozone_depletion_potential is None
