@@ -236,17 +236,17 @@ For example:
 from pyfluids import HumidAir, InputHumidAir
 
 humid_air = HumidAir().with_state(
-    InputHumidAir.pressure(101325),
+    InputHumidAir.altitude(0),
     InputHumidAir.temperature(20),
     InputHumidAir.relative_humidity(50),
 )
 same_humid_air = HumidAir().with_state(
-    InputHumidAir.pressure(101.325e3),
+    InputHumidAir.pressure(101325),
     InputHumidAir.temperature(20),
     InputHumidAir.relative_humidity(50),
 )
 print(humid_air == same_humid_air)  # True
-print(InputHumidAir.pressure(101325) == InputHumidAir.pressure(101.325e3))  # True
+print(InputHumidAir.altitude(0) == InputHumidAir.pressure(101325))  # True
 ```
 
 ### Converting to a JSON string
