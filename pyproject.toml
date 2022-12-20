@@ -1,8 +1,10 @@
 [tool.poetry]
 name = "pyfluids"
-version = "2.3.0"
+version = "2.3.1.rc1"
 description = "A simple, full-featured, lightweight CoolProp wrapper for Python"
-authors = ["Vladimir Portyanikhin <v.portyanikhin@ya.ru>"]
+authors = [
+    "Vladimir Portyanikhin <v.portyanikhin@ya.ru>",
+]
 license = "MIT"
 readme = "PyPI.md"
 homepage = "https://github.com/portyanikhin/PyFluids"
