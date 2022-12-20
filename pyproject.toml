@@ -1,0 +1,64 @@
+[tool.poetry]
+name = "pyfluids"
+version = "2.3.0"
+description = "A simple, full-featured, lightweight CoolProp wrapper for Python"
+authors = ["Vladimir Portyanikhin <v.portyanikhin@ya.ru>"]
+license = "MIT"
+readme = "PyPI.md"
+homepage = "https://github.com/portyanikhin/PyFluids"
+repository = "https://github.com/portyanikhin/PyFluids"
+documentation = "https://github.com/portyanikhin/PyFluids"
+keywords = [
+    "CoolProp",
+    "fluids",
+    "mixtures",
+    "humid",
+    "air",
+    "thermophysical",
+    "properties",
+    "thermodynamics",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Manufacturing",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Unix",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Education",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Atmospheric Science",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+packages = [
+    { include = "pyfluids" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.7, <3.12"
+CoolProp = "6.4.3.post1"
+
+[tool.poetry.group.test.dependencies]
+pytest = "7.2.0"
+pytest-asyncio = "0.20.3"
+pytest-cov = "4.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

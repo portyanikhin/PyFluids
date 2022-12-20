@@ -1,4 +1,0 @@
-CoolProp == 6.4.3.post1
-pytest == 7.2.0
-pytest-asyncio == 0.20.3
-pytest-cov == 4.0.0
