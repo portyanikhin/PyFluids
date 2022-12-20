@@ -4,7 +4,7 @@ from pyfluids import HumidAir, InputHumidAir
 
 
 class HumidAirExtended(HumidAir):
-    """An example of how to add new properties to a HumidAir."""
+    """An example of how to add new properties to the HumidAir class."""
 
     def __init__(self):
         super().__init__()
@@ -32,5 +32,7 @@ class TestHumidAirExtended:
         InputHumidAir.relative_humidity(50),
     )
 
-    def test_specific_heat_const_volume(self):
+    def test_specific_heat_const_volume_humid_air_in_standard_conditions_returns_722(
+        self,
+    ):
         assert self.humid_air.specific_heat_const_volume == 722.68718970632506

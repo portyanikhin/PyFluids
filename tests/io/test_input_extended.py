@@ -4,7 +4,7 @@ from pyfluids import Input
 
 
 class InputExtended(Input):
-    """An example of how to extend Input."""
+    """An example of how to extend the Input class."""
 
     def __init__(self, coolprop_key: int, value: float):
         """
@@ -27,10 +27,10 @@ class InputExtended(Input):
 
 
 class TestInputExtended:
-    input_extended = InputExtended.molar_density(900)
+    input_extended = InputExtended.molar_density(9e2)
 
-    def test_coolprop_key(self):
+    def test_coolprop_key_new_input_matches_with_coolprop(self):
         assert self.input_extended.coolprop_key == CoolProp.iDmolar
 
-    def test_value(self):
+    def test_value_new_input_should_be_in_si_units(self):
         assert self.input_extended.value == 900
