@@ -56,64 +56,6 @@ class Mixture(AbstractFluid):
         """List of mass-based fractions [%]."""
         return self.__fractions
 
-    def isentropic_compression_to_pressure(self, pressure: float) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def compression_to_pressure(
-        self, pressure: float, isentropic_efficiency: float
-    ) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def isenthalpic_expansion_to_pressure(self, pressure: float) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def isentropic_expansion_to_pressure(self, pressure: float) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def expansion_to_pressure(
-        self, pressure: float, isentropic_efficiency: float
-    ) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def cooling_to_enthalpy(
-        self, enthalpy: float, pressure_drop: float = 0
-    ) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def heating_to_enthalpy(
-        self, enthalpy: float, pressure_drop: float = 0
-    ) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def bubble_point_at_pressure(self, pressure: float) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def bubble_point_at_temperature(self, temperature: float) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def dew_point_at_pressure(self, pressure: float) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def dew_point_at_temperature(self, temperature: float) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def two_phase_point_at_pressure(
-        self, pressure: float, quality: float
-    ) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def mixing(
-        self,
-        first_specific_mass_flow: float,
-        first: "AbstractFluid",
-        second_specific_mass_flow: float,
-        second: "AbstractFluid",
-    ) -> "AbstractFluid":
-        raise NotImplementedError  # pragma: no cover
-
-    def _is_valid_fluids_for_mixing(self, first: "Mixture", second: "Mixture") -> bool:
-        raise NotImplementedError  # pragma: no cover
-
     def __eq__(self, other: "Mixture") -> bool:
         return isinstance(other, Mixture) and hash(self) == hash(other)
 

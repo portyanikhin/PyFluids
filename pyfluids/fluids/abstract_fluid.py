@@ -526,8 +526,6 @@ class AbstractFluid(ABC):
         :return: The state of the fluid at the end of the process.
         :raises ValueError: If the mixing process is not possible.
         """
-        if not self._is_valid_fluids_for_mixing(first, second):
-            raise ValueError("The mixing process is possible only for the same fluids!")
         if first.pressure != second.pressure:
             raise ValueError(
                 "The mixing process is possible only for flows with the same pressure!"
@@ -586,13 +584,6 @@ class AbstractFluid(ABC):
         )
         OutputsValidator(value).validate()
         return value
-
-    @abstractmethod
-    def _is_valid_fluids_for_mixing(
-        self, first: "AbstractFluid", second: "AbstractFluid"
-    ) -> bool:
-        """Returns True if the fluids can be mixed."""
-        raise NotImplementedError  # pragma: no cover
 
     def __hash__(self) -> int:
         return hash(
