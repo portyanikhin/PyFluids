@@ -35,6 +35,9 @@ jobs:
     - name: Test
       run: |
         source $VENV
-        pytest --cov pyfluids
+        pytest --cov pyfluids --cov-report=xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        fail_ci_if_error: true
