@@ -1,4 +1,4 @@
-from typing import List
+from __future__ import annotations
 
 from CoolProp import AbstractState
 
@@ -11,7 +11,7 @@ __all__ = ["Mixture"]
 class Mixture(AbstractFluid):
     """Mass-based mixture of pure fluids."""
 
-    def __init__(self, fluids: List[FluidsList], fractions: List[float]):
+    def __init__(self, fluids: list[FluidsList], fractions: list[float]):
         """
         Mass-based mixture of pure fluids.
 
@@ -43,23 +43,23 @@ class Mixture(AbstractFluid):
         )
         self._backend.set_mass_fractions(self.__fractions)
 
-    def factory(self) -> "Mixture":
+    def factory(self) -> Mixture:
         return Mixture(self.__fluids, self.__fractions)
 
     @property
-    def fluids(self) -> List[FluidsList]:
+    def fluids(self) -> list[FluidsList]:
         """List of selected pure fluids."""
         return self.__fluids
 
     @property
-    def fractions(self) -> List[float]:
+    def fractions(self) -> list[float]:
         """List of mass-based fractions [%]."""
         return self.__fractions
 
-    def __eq__(self, other: "Mixture") -> bool:
+    def __eq__(self, other: Mixture) -> bool:
         return isinstance(other, Mixture) and hash(self) == hash(other)
 
-    def __ne__(self, other: "Mixture") -> bool:
+    def __ne__(self, other: Mixture) -> bool:
         return not self.__eq__(other)
 
     def __hash__(self) -> int:

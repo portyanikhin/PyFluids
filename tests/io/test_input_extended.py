@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import CoolProp
 
 from pyfluids import Input
@@ -16,7 +18,7 @@ class InputExtended(Input):
         super().__init__(coolprop_key, value)
 
     @classmethod
-    def molar_density(cls, value: float) -> "InputExtended":
+    def molar_density(cls, value: float) -> InputExtended:
         """
         Molar density.
 

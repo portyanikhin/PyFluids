@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import asyncio
 import json
 from math import isinf, isnan
-from typing import Optional, List
 
 import pytest
 from CoolProp.CoolProp import PropsSI
@@ -11,7 +12,7 @@ from pyfluids import Fluid, FluidsList, Phases, Input
 
 class TestFluid:
     fluid: Fluid = Fluid(FluidsList.Water)
-    fluid_names: List[FluidsList] = [
+    fluid_names: list[FluidsList] = [
         name
         for name in list(FluidsList)
         if not (
@@ -222,7 +223,7 @@ class TestFluid:
             Input.temperature(self.fluid.max_temperature),
         )
 
-    def coolprop_interface(self, output_key: str) -> Optional[float]:
+    def coolprop_interface(self, output_key: str) -> float | None:
         if output_key == "P":
             return self.fluid.pressure
         if output_key == "T":
@@ -242,7 +243,7 @@ class TestFluid:
             return None
 
     @staticmethod
-    def checked_value(value: float, output_key: str) -> Optional[float]:
+    def checked_value(value: float, output_key: str) -> float | None:
         if isinf(value) or isnan(value) or (output_key == "Q" and not 0 <= value <= 1):
             return None
         if output_key.startswith("T"):

@@ -1,4 +1,4 @@
-from typing import Optional
+from __future__ import annotations
 
 import CoolProp
 
@@ -10,11 +10,11 @@ class FluidExtended(Fluid):
 
     def __init__(self, name: FluidsList, fraction: float = None):
         super().__init__(name, fraction)
-        self.__molar_density: Optional[float] = None
-        self.__ozone_depletion_potential: Optional[float] = None
-        self.__specific_heat_const_volume: Optional[float] = None
+        self.__molar_density: float | None = None
+        self.__ozone_depletion_potential: float | None = None
+        self.__specific_heat_const_volume: float | None = None
 
-    def factory(self) -> "FluidExtended":
+    def factory(self) -> FluidExtended:
         return FluidExtended(self.name, self.fraction)
 
     def reset(self):
@@ -31,14 +31,14 @@ class FluidExtended(Fluid):
         return self.__specific_heat_const_volume
 
     @property
-    def molar_density(self) -> Optional[float]:
+    def molar_density(self) -> float | None:
         """Molar density [mol/m3]."""
         if self.__molar_density is None:
             self.__molar_density = self._nullable_keyed_output(CoolProp.iDmolar)
         return self.__molar_density
 
     @property
-    def ozone_depletion_potential(self) -> Optional[float]:
+    def ozone_depletion_potential(self) -> float | None:
         """Ozone depletion potential (ODP) [-]."""
         if self.__ozone_depletion_potential is None:
             self.__ozone_depletion_potential = self._nullable_keyed_output(
