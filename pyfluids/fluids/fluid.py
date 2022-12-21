@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from CoolProp import AbstractState
 
 from .abstract_fluid import AbstractFluid
@@ -9,7 +11,7 @@ __all__ = ["Fluid"]
 class Fluid(AbstractFluid):
     """Pure/pseudo-pure fluid or binary mixture."""
 
-    def __init__(self, name: FluidsList, fraction: float = None):
+    def __init__(self, name: FluidsList, fraction: float | None = None):
         """
         Pure/pseudo-pure fluid or binary mixture.
 
@@ -37,7 +39,7 @@ class Fluid(AbstractFluid):
         if not self.__name.pure:
             self.__set_fraction()
 
-    def factory(self) -> "Fluid":
+    def factory(self) -> Fluid:
         return Fluid(self.__name, self.__fraction)
 
     @property
@@ -81,10 +83,10 @@ class Fluid(AbstractFluid):
             and first.fraction == second.fraction
         )
 
-    def __eq__(self, other: "Fluid") -> bool:
+    def __eq__(self, other: Fluid) -> bool:
         return isinstance(other, Fluid) and hash(self) == hash(other)
 
-    def __ne__(self, other: "Fluid") -> bool:
+    def __ne__(self, other: Fluid) -> bool:
         return not self.__eq__(other)
 
     def __hash__(self) -> int:

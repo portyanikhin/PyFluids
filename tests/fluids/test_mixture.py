@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import json
-from typing import List
 
 import pytest
 
@@ -41,7 +42,7 @@ class TestMixture:
         ],
     )
     def test_mixture_wrong_fluids_or_fractions_raises_value_error(
-        self, fluids: List[FluidsList], fractions: List[float], message: str
+        self, fluids: list[FluidsList], fractions: list[float], message: str
     ):
         with pytest.raises(ValueError) as e:
             Mixture(fluids, fractions)
