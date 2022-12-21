@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pyfluids import InputHumidAir
 
 
@@ -14,7 +16,7 @@ class InputHumidAirExtended(InputHumidAir):
         super().__init__(coolprop_key, value)
 
     @classmethod
-    def water_mole_fraction(cls, value: float) -> "InputHumidAirExtended":
+    def water_mole_fraction(cls, value: float) -> InputHumidAirExtended:
         """
         Water mole fraction.
 

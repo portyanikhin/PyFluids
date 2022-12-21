@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import json
-from typing import Optional, List, Dict
 
 from CoolProp.HumidAirProp import HAPropsSI
 
@@ -13,21 +14,21 @@ class HumidAir:
 
     def __init__(self):
         """Real humid air (see ASHRAE RP-1485)."""
-        self._inputs: List[InputHumidAir] = []
-        self.__compressibility: Optional[float] = None
-        self.__conductivity: Optional[float] = None
-        self.__density: Optional[float] = None
-        self.__dew_temperature: Optional[float] = None
-        self.__dynamic_viscosity: Optional[float] = None
-        self.__enthalpy: Optional[float] = None
-        self.__entropy: Optional[float] = None
-        self.__humidity: Optional[float] = None
-        self.__partial_pressure: Optional[float] = None
-        self.__pressure: Optional[float] = None
-        self.__relative_humidity: Optional[float] = None
-        self.__specific_heat: Optional[float] = None
-        self.__temperature: Optional[float] = None
-        self.__wet_bulb_temperature: Optional[float] = None
+        self._inputs: list[InputHumidAir] = []
+        self.__compressibility: float | None = None
+        self.__conductivity: float | None = None
+        self.__density: float | None = None
+        self.__dew_temperature: float | None = None
+        self.__dynamic_viscosity: float | None = None
+        self.__enthalpy: float | None = None
+        self.__entropy: float | None = None
+        self.__humidity: float | None = None
+        self.__partial_pressure: float | None = None
+        self.__pressure: float | None = None
+        self.__relative_humidity: float | None = None
+        self.__specific_heat: float | None = None
+        self.__temperature: float | None = None
+        self.__wet_bulb_temperature: float | None = None
 
     @property
     def compressibility(self) -> float:
@@ -137,11 +138,11 @@ class HumidAir:
             self.__wet_bulb_temperature = self._keyed_output("B") - 273.15
         return self.__wet_bulb_temperature
 
-    def factory(self) -> "HumidAir":
+    def factory(self) -> HumidAir:
         """Returns a new humid air instance with no defined state."""
         return HumidAir()
 
-    def clone(self) -> "HumidAir":
+    def clone(self) -> HumidAir:
         """Performs deep (full) copy of the humid air instance."""
         return self.with_state(*self._inputs)
 
@@ -150,7 +151,7 @@ class HumidAir:
         first_input: InputHumidAir,
         second_input: InputHumidAir,
         third_input: InputHumidAir,
-    ) -> "HumidAir":
+    ) -> HumidAir:
         """
         Returns a new humid air instance with a defined state.
 
@@ -202,7 +203,7 @@ class HumidAir:
 
     def dry_cooling_to_temperature(
         self, temperature: float, pressure_drop: float = 0
-    ) -> "HumidAir":
+    ) -> HumidAir:
         """
         The process of cooling without dehumidification to a given temperature.
 
@@ -215,7 +216,7 @@ class HumidAir:
 
     def dry_cooling_to_enthalpy(
         self, enthalpy: float, pressure_drop: float = 0
-    ) -> "HumidAir":
+    ) -> HumidAir:
         """
         The process of cooling without dehumidification to a given enthalpy.
 
@@ -228,7 +229,7 @@ class HumidAir:
 
     def wet_cooling_to_temperature_and_relative_humidity(
         self, temperature: float, relative_humidity: float, pressure_drop: float = 0
-    ) -> "HumidAir":
+    ) -> HumidAir:
         """
         The process of cooling with dehumidification
         to a given temperature and relative humidity ratio.
@@ -248,7 +249,7 @@ class HumidAir:
 
     def wet_cooling_to_temperature_and_absolute_humidity(
         self, temperature: float, humidity: float, pressure_drop: float = 0
-    ) -> "HumidAir":
+    ) -> HumidAir:
         """
         The process of cooling with dehumidification
         to a given temperature and absolute humidity ratio.
@@ -268,7 +269,7 @@ class HumidAir:
 
     def wet_cooling_to_enthalpy_and_relative_humidity(
         self, enthalpy: float, relative_humidity: float, pressure_drop: float = 0
-    ) -> "HumidAir":
+    ) -> HumidAir:
         """
         The process of cooling with dehumidification
         to a given enthalpy and relative humidity ratio.
@@ -288,7 +289,7 @@ class HumidAir:
 
     def wet_cooling_to_enthalpy_and_absolute_humidity(
         self, enthalpy: float, humidity: float, pressure_drop: float = 0
-    ) -> "HumidAir":
+    ) -> HumidAir:
         """
         The process of cooling with dehumidification
         to a given enthalpy and absolute humidity ratio.
@@ -308,7 +309,7 @@ class HumidAir:
 
     def heating_to_temperature(
         self, temperature: float, pressure_drop: float = 0
-    ) -> "HumidAir":
+    ) -> HumidAir:
         """
         The process of heating to a given temperature.
 
@@ -323,7 +324,7 @@ class HumidAir:
 
     def heating_to_enthalpy(
         self, enthalpy: float, pressure_drop: float = 0
-    ) -> "HumidAir":
+    ) -> HumidAir:
         """
         The process of heating to a given enthalpy.
 
@@ -336,7 +337,7 @@ class HumidAir:
 
     def humidification_by_water_to_relative_humidity(
         self, relative_humidity: float
-    ) -> "HumidAir":
+    ) -> HumidAir:
         """
         The process of humidification by water (isenthalpic)
         to a given relative humidity ratio.
@@ -350,9 +351,7 @@ class HumidAir:
             InputHumidAir.relative_humidity(relative_humidity),
         )
 
-    def humidification_by_water_to_absolute_humidity(
-        self, humidity: float
-    ) -> "HumidAir":
+    def humidification_by_water_to_absolute_humidity(self, humidity: float) -> HumidAir:
         """
         The process of humidification by water (isenthalpic)
         to a given absolute humidity ratio.
@@ -368,7 +367,7 @@ class HumidAir:
 
     def humidification_by_steam_to_relative_humidity(
         self, relative_humidity: float
-    ) -> "HumidAir":
+    ) -> HumidAir:
         """
         The process of humidification by steam (isothermal)
         to a given relative humidity ratio.
@@ -382,9 +381,7 @@ class HumidAir:
             InputHumidAir.relative_humidity(relative_humidity),
         )
 
-    def humidification_by_steam_to_absolute_humidity(
-        self, humidity: float
-    ) -> "HumidAir":
+    def humidification_by_steam_to_absolute_humidity(self, humidity: float) -> HumidAir:
         """
         The process of humidification by steam (isothermal)
         to a given absolute humidity ratio.
@@ -401,10 +398,10 @@ class HumidAir:
     def mixing(
         self,
         first_specific_mass_flow: float,
-        first: "HumidAir",
+        first: HumidAir,
         second_specific_mass_flow: float,
-        second: "HumidAir",
-    ) -> "HumidAir":
+        second: HumidAir,
+    ) -> HumidAir:
         """
         The mixing process.
 
@@ -450,7 +447,7 @@ class HumidAir:
             self.as_dict(), indent=4 if indented else None, default=str, sort_keys=False
         )
 
-    def as_dict(self) -> Dict[str, float]:
+    def as_dict(self) -> dict[str, float]:
         """Converts the humid air to a dict."""
         return {
             self.__select(key): getattr(self, self.__select(key))
@@ -479,10 +476,10 @@ class HumidAir:
         OutputsValidator(value).validate()
         return value
 
-    def __eq__(self, other: "HumidAir") -> bool:
+    def __eq__(self, other: HumidAir) -> bool:
         return isinstance(other, HumidAir) and hash(self) == hash(other)
 
-    def __ne__(self, other: "HumidAir") -> bool:
+    def __ne__(self, other: HumidAir) -> bool:
         return not self.__eq__(other)
 
     def __hash__(self) -> int:
@@ -500,7 +497,7 @@ class HumidAir:
 
     def __dry_heat_transfer_to_temperature(
         self, temperature: float, cooling: bool, pressure_drop: float = 0
-    ) -> "HumidAir":
+    ) -> HumidAir:
         self.__check_temperature(temperature, cooling)
         self.__check_dew_temperature(temperature)
         self.__check_pressure_drop(pressure_drop)
@@ -512,7 +509,7 @@ class HumidAir:
 
     def __dry_heat_transfer_to_enthalpy(
         self, enthalpy: float, cooling: bool, pressure_drop: float = 0
-    ) -> "HumidAir":
+    ) -> HumidAir:
         self.__check_enthalpy(enthalpy, cooling)
         self.__check_dew_enthalpy(enthalpy)
         self.__check_pressure_drop(pressure_drop)
@@ -547,7 +544,7 @@ class HumidAir:
 
     def __humidification_to(
         self, first_input: InputHumidAir, second_input: InputHumidAir
-    ) -> "HumidAir":
+    ) -> HumidAir:
         result = self.with_state(
             InputHumidAir.pressure(self.pressure), first_input, second_input
         )

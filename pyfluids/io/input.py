@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import CoolProp
 
 from .abstract_input import AbstractInput
@@ -18,7 +20,7 @@ class Input(AbstractInput):
         super().__init__(coolprop_key, value)
 
     @classmethod
-    def density(cls, value: float) -> "Input":
+    def density(cls, value: float) -> Input:
         """
         Mass density.
 
@@ -28,7 +30,7 @@ class Input(AbstractInput):
         return cls(CoolProp.iDmass, value)
 
     @classmethod
-    def enthalpy(cls, value: float) -> "Input":
+    def enthalpy(cls, value: float) -> Input:
         """
         Mass specific enthalpy.
 
@@ -38,7 +40,7 @@ class Input(AbstractInput):
         return cls(CoolProp.iHmass, value)
 
     @classmethod
-    def entropy(cls, value: float) -> "Input":
+    def entropy(cls, value: float) -> Input:
         """
         Mass specific entropy.
 
@@ -48,7 +50,7 @@ class Input(AbstractInput):
         return cls(CoolProp.iSmass, value)
 
     @classmethod
-    def internal_energy(cls, value: float) -> "Input":
+    def internal_energy(cls, value: float) -> Input:
         """
         Mass specific internal energy.
 
@@ -58,7 +60,7 @@ class Input(AbstractInput):
         return cls(CoolProp.iUmass, value)
 
     @classmethod
-    def pressure(cls, value: float) -> "Input":
+    def pressure(cls, value: float) -> Input:
         """
         Absolute pressure.
 
@@ -68,7 +70,7 @@ class Input(AbstractInput):
         return cls(CoolProp.iP, value)
 
     @classmethod
-    def quality(cls, value: float) -> "Input":
+    def quality(cls, value: float) -> Input:
         """
         Mass vapor quality.
 
@@ -78,7 +80,7 @@ class Input(AbstractInput):
         return cls(CoolProp.iQ, value * 1e-2)
 
     @classmethod
-    def temperature(cls, value: float) -> "Input":
+    def temperature(cls, value: float) -> Input:
         """
         Temperature.
 

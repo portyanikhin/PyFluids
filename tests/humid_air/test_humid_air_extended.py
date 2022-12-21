@@ -1,4 +1,4 @@
-from typing import Optional
+from __future__ import annotations
 
 from pyfluids import HumidAir, InputHumidAir
 
@@ -8,7 +8,7 @@ class HumidAirExtended(HumidAir):
 
     def __init__(self):
         super().__init__()
-        self.__specific_heat_const_volume: Optional[float] = None
+        self.__specific_heat_const_volume: float | None = None
 
     @property
     def specific_heat_const_volume(self) -> float:
@@ -17,7 +17,7 @@ class HumidAirExtended(HumidAir):
             self.__specific_heat_const_volume = self._keyed_output("CVha")
         return self.__specific_heat_const_volume
 
-    def factory(self) -> "HumidAirExtended":
+    def factory(self) -> HumidAirExtended:
         return HumidAirExtended()
 
     def reset(self):

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .abstract_input import AbstractInput
 
 __all__ = ["InputHumidAir"]
@@ -16,7 +18,7 @@ class InputHumidAir(AbstractInput):
         super().__init__(coolprop_key, value)
 
     @classmethod
-    def altitude(cls, value: float) -> "InputHumidAir":
+    def altitude(cls, value: float) -> InputHumidAir:
         """
         Altitude above sea level.
 
@@ -35,7 +37,7 @@ class InputHumidAir(AbstractInput):
         return cls("P", 101325 * (1 - 2.25577e-5 * value) ** 5.2559)
 
     @classmethod
-    def density(cls, value: float) -> "InputHumidAir":
+    def density(cls, value: float) -> InputHumidAir:
         """
         Mass density per humid air unit.
 
@@ -45,7 +47,7 @@ class InputHumidAir(AbstractInput):
         return cls("Vha", 1 / value)
 
     @classmethod
-    def dew_temperature(cls, value: float) -> "InputHumidAir":
+    def dew_temperature(cls, value: float) -> InputHumidAir:
         """
         Dew-point temperature.
 
@@ -55,7 +57,7 @@ class InputHumidAir(AbstractInput):
         return cls("D", value + 273.15)
 
     @classmethod
-    def enthalpy(cls, value: float) -> "InputHumidAir":
+    def enthalpy(cls, value: float) -> InputHumidAir:
         """
         Mass specific enthalpy per humid air.
 
@@ -65,7 +67,7 @@ class InputHumidAir(AbstractInput):
         return cls("Hha", value)
 
     @classmethod
-    def entropy(cls, value: float) -> "InputHumidAir":
+    def entropy(cls, value: float) -> InputHumidAir:
         """
         Mass specific entropy per humid air.
 
@@ -75,7 +77,7 @@ class InputHumidAir(AbstractInput):
         return cls("Sha", value)
 
     @classmethod
-    def humidity(cls, value: float) -> "InputHumidAir":
+    def humidity(cls, value: float) -> InputHumidAir:
         """
         Absolute humidity ratio.
 
@@ -85,7 +87,7 @@ class InputHumidAir(AbstractInput):
         return cls("W", value)
 
     @classmethod
-    def partial_pressure(cls, value: float) -> "InputHumidAir":
+    def partial_pressure(cls, value: float) -> InputHumidAir:
         """
         Partial pressure of water vapor.
 
@@ -95,7 +97,7 @@ class InputHumidAir(AbstractInput):
         return cls("P_w", value)
 
     @classmethod
-    def pressure(cls, value: float) -> "InputHumidAir":
+    def pressure(cls, value: float) -> InputHumidAir:
         """
         Absolute pressure.
 
@@ -105,7 +107,7 @@ class InputHumidAir(AbstractInput):
         return cls("P", value)
 
     @classmethod
-    def relative_humidity(cls, value: float) -> "InputHumidAir":
+    def relative_humidity(cls, value: float) -> InputHumidAir:
         """
         Relative humidity.
 
@@ -115,7 +117,7 @@ class InputHumidAir(AbstractInput):
         return cls("R", value * 1e-2)
 
     @classmethod
-    def temperature(cls, value: float) -> "InputHumidAir":
+    def temperature(cls, value: float) -> InputHumidAir:
         """
         Temperature.
 
@@ -125,7 +127,7 @@ class InputHumidAir(AbstractInput):
         return cls("T", value + 273.15)
 
     @classmethod
-    def wet_bulb_temperature(cls, value: float) -> "InputHumidAir":
+    def wet_bulb_temperature(cls, value: float) -> InputHumidAir:
         """
         Wet-bulb temperature.
 
