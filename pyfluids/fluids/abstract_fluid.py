@@ -284,6 +284,7 @@ class AbstractFluid(ABC):
     # noinspection DuplicatedCode
     def reset(self):
         """Resets all non-trivial properties."""
+        self._inputs.clear()
         self.__compressibility = None
         self.__conductivity = None
         self.__density = None
