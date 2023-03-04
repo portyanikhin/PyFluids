@@ -186,6 +186,7 @@ class HumidAir:
     # noinspection DuplicatedCode
     def reset(self):
         """Resets all properties."""
+        self._inputs.clear()
         self.__compressibility = None
         self.__conductivity = None
         self.__density = None
