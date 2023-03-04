@@ -12,11 +12,11 @@ from ..io import Input, OutputsValidator
 
 
 class AbstractFluid(ABC):
-    """Fluids base class."""
+    """Base class of fluids."""
 
     @abstractmethod
     def __init__(self):
-        """Fluids base class."""
+        """Base class of fluids."""
         self._backend: AbstractState | None = None
         self._inputs: list[Input] = []
         self.__compressibility: float | None = None
@@ -589,31 +589,8 @@ class AbstractFluid(ABC):
     def __hash__(self) -> int:
         return hash(
             (
-                self.compressibility,
-                self.conductivity,
-                self.critical_pressure,
-                self.critical_temperature,
-                self.density,
-                self.dynamic_viscosity,
-                self.enthalpy,
-                self.entropy,
-                self.freezing_temperature,
-                self.internal_energy,
-                self.max_pressure,
-                self.max_temperature,
-                self.min_pressure,
-                self.min_temperature,
-                self.molar_mass,
-                self.phase,
-                self.prandtl,
-                self.pressure,
-                self.quality,
-                self.sound_speed,
-                self.specific_heat,
-                self.surface_tension,
-                self.temperature,
-                self.triple_pressure,
-                self.triple_temperature,
+                "&".join(str(i.value) for i in self._inputs),
+                "&".join(str(i.coolprop_key) for i in self._inputs),
             )
         )
 

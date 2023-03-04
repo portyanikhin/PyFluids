@@ -11,6 +11,8 @@ __all__ = ["Mixture"]
 class Mixture(AbstractFluid):
     """Mass-based mixture of pure fluids."""
 
+    __AVAILABLE_BACKEND = "HEOS"
+
     def __init__(self, fluids: list[FluidsList], fractions: list[float]):
         """
         Mass-based mixture of pure fluids.
@@ -23,10 +25,13 @@ class Mixture(AbstractFluid):
             raise ValueError(
                 "Invalid input! Fluids and fractions should be of the same length."
             )
-        if not all(fluid.pure and fluid.coolprop_backend == "HEOS" for fluid in fluids):
+        if not all(
+            fluid.pure and fluid.coolprop_backend == self.__AVAILABLE_BACKEND
+            for fluid in fluids
+        ):
             raise ValueError(
                 "Invalid components! All of them should be "
-                "a pure fluid with HEOS backend."
+                f"a pure fluid with {self.__AVAILABLE_BACKEND} backend."
             )
         if not all(0 < fraction < 100 for fraction in fractions):
             raise ValueError(
@@ -39,7 +44,8 @@ class Mixture(AbstractFluid):
         super().__init__()
         self.__fluids, self.__fractions = fluids, fractions
         self._backend = AbstractState(
-            "HEOS", "&".join(fluid.coolprop_name for fluid in self.__fluids)
+            self.__AVAILABLE_BACKEND,
+            "&".join(fluid.coolprop_name for fluid in self.__fluids),
         )
         self._backend.set_mass_fractions(self.__fractions)
 
@@ -48,7 +54,7 @@ class Mixture(AbstractFluid):
 
     @property
     def fluids(self) -> list[FluidsList]:
-        """List of selected pure fluids."""
+        """List of selected names of pure fluids."""
         return self.__fluids
 
     @property
@@ -63,4 +69,10 @@ class Mixture(AbstractFluid):
         return not self.__eq__(other)
 
     def __hash__(self) -> int:
-        return hash((super().__hash__(), *self.__fluids, *self.__fractions))
+        return hash(
+            (
+                "&".join(str(i.coolprop_name) for i in self.__fluids),
+                "&".join(str(i) for i in self.__fractions),
+                super().__hash__(),
+            )
+        )
