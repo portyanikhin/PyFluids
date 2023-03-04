@@ -90,4 +90,4 @@ class Fluid(AbstractFluid):
         return not self.__eq__(other)
 
     def __hash__(self) -> int:
-        return hash((super().__hash__(), self.__name, self.__fraction))
+        return hash((self.__name.coolprop_name, self.__fraction, super().__hash__()))

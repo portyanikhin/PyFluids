@@ -485,8 +485,8 @@ class HumidAir:
     def __hash__(self) -> int:
         return hash(
             (
-                sum(i.value for i in self._inputs),
-                "&".join(i.coolprop_key for i in self._inputs),
+                "&".join(str(i.value) for i in self._inputs),
+                "&".join(str(i.coolprop_key) for i in self._inputs),
             )
         )
 
