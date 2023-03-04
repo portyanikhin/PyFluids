@@ -180,7 +180,7 @@ class HumidAir:
         :raises ValueError: If input is invalid.
         """
         self.reset()
-        self._inputs = (first_input, second_input, third_input)
+        self._inputs = [first_input, second_input, third_input]
         self.__check_inputs()
 
     # noinspection DuplicatedCode
