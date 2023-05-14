@@ -9,7 +9,7 @@ import tomli
 
 from .pyfluids_config import PyFluidsConfig
 from .singleton import Singleton
-from ..enums import UnitsSystem
+from .units_system import UnitsSystem
 
 __all__ = ["PyFluidsConfigBuilder"]
 
