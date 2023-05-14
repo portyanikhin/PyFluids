@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ..enums import UnitsSystem
+from .units_system import UnitsSystem
 
 __all__ = ["PyFluidsConfig"]
 
