@@ -88,7 +88,6 @@ class TestHumidAir:
         actual = (
             self.humid_air.compressibility,
             self.humid_air.conductivity,
-            self.humid_air.density,
             self.humid_air.dew_temperature,
             self.humid_air.dynamic_viscosity,
             self.humid_air.enthalpy,
@@ -98,6 +97,7 @@ class TestHumidAir:
             self.humid_air.pressure,
             self.humid_air.relative_humidity,
             self.humid_air.specific_heat,
+            self.humid_air.specific_volume,
             self.humid_air.temperature,
             self.humid_air.wet_bulb_temperature,
         )
@@ -107,7 +107,6 @@ class TestHumidAir:
                 (
                     "Z",
                     "K",
-                    "Vha",
                     "D",
                     "M",
                     "Hha",
@@ -117,12 +116,14 @@ class TestHumidAir:
                     "P",
                     "R",
                     "Cha",
+                    "Vha",
                     "T",
                     "B",
                 ),
             )
         )
         assert all([abs(actual[i] - expected[i]) < 1e-9 for i in range(len(actual))])
+        assert self.humid_air.density == 1 / self.humid_air.specific_volume
         assert (
             self.humid_air.kinematic_viscosity
             == self.humid_air.dynamic_viscosity / self.humid_air.density
@@ -230,8 +231,6 @@ class TestHumidAir:
             "R",
             self.humid_air.relative_humidity * 1e-2,
         )
-        if output_key == "Vha":
-            return 1 / value
         if output_key in ("D", "T", "B"):
             return value - 273.15
         if output_key == "R":
