@@ -1,6 +1,8 @@
 from enum import Enum
 
 from .mix import Mix
+from ..config import UnitConverter
+
 
 __all__ = ["FluidsList"]
 
@@ -409,10 +411,10 @@ class FluidsList(Enum):
             fraction_max,
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.name
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
     @property
@@ -437,10 +439,16 @@ class FluidsList(Enum):
 
     @property
     def fraction_min(self) -> float:
-        """Minimum possible fraction [%]."""
-        return self.__fraction_min * 1e2
+        """
+        Minimum possible fraction
+        [by default, %; you can change this using the configuration file].
+        """
+        return UnitConverter().convert_decimal_fraction_from_si(self.__fraction_min)
 
     @property
     def fraction_max(self) -> float:
-        """Maximum possible fraction [%]."""
-        return self.__fraction_max * 1e2
+        """
+        Maximum possible fraction
+        [by default, %; you can change this using the configuration file].
+        """
+        return UnitConverter().convert_decimal_fraction_from_si(self.__fraction_max)
