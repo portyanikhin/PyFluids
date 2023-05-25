@@ -120,6 +120,16 @@ class InputHumidAir(AbstractInput):
         return cls("R", UnitConverter().convert_decimal_fraction_to_si(value))
 
     @classmethod
+    def specific_volume(cls, value: float) -> InputHumidAir:
+        """
+        Mass specific volume per humid air unit.
+
+        :param value: The value of the input [m3/kg].
+        :return: Mass specific volume per humid air unit for the input.
+        """
+        return cls("Vha", value)
+
+    @classmethod
     def temperature(cls, value: float) -> InputHumidAir:
         """
         Temperature.
