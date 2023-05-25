@@ -164,6 +164,7 @@ class TestFluid:
             if self.fluid.dynamic_viscosity is not None
             else True
         )
+        assert self.fluid.specific_volume == 1 / self.fluid.density
 
     def test_equals_same_returns_true(self):
         origin = self.fluid.with_state(Input.pressure(101325), Input.temperature(5))
