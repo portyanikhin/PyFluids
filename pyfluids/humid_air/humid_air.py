@@ -18,7 +18,6 @@ class HumidAir:
         self._inputs: list[InputHumidAir] = []
         self.__compressibility: float | None = None
         self.__conductivity: float | None = None
-        self.__density: float | None = None
         self.__dew_temperature: float | None = None
         self.__dynamic_viscosity: float | None = None
         self.__enthalpy: float | None = None
@@ -28,6 +27,7 @@ class HumidAir:
         self.__pressure: float | None = None
         self.__relative_humidity: float | None = None
         self.__specific_heat: float | None = None
+        self.__specific_volume: float | None = None
         self.__temperature: float | None = None
         self.__wet_bulb_temperature: float | None = None
         self._unit_converter: UnitConverter = UnitConverter()
@@ -54,9 +54,7 @@ class HumidAir:
     @property
     def density(self) -> float:
         """Mass density per humid air unit [kg/m3]."""
-        if self.__density is None:
-            self.__density = 1 / self._keyed_output("Vha")
-        return self.__density
+        return 1 / self.specific_volume
 
     @property
     def dew_temperature(self) -> float:
@@ -144,6 +142,13 @@ class HumidAir:
         return self.__specific_heat
 
     @property
+    def specific_volume(self) -> float:
+        """Mass specific volume per humid air unit [m3/kg]."""
+        if self.__specific_volume is None:
+            self.__specific_volume = self._keyed_output("Vha")
+        return self.__specific_volume
+
+    @property
     def temperature(self) -> float:
         """
         Dry-bulb temperature
@@ -220,7 +225,6 @@ class HumidAir:
         self._inputs.clear()
         self.__compressibility = None
         self.__conductivity = None
-        self.__density = None
         self.__dew_temperature = None
         self.__dynamic_viscosity = None
         self.__enthalpy = None
@@ -230,6 +234,7 @@ class HumidAir:
         self.__pressure = None
         self.__relative_humidity = None
         self.__specific_heat = None
+        self.__specific_volume = None
         self.__temperature = None
         self.__wet_bulb_temperature = None
 

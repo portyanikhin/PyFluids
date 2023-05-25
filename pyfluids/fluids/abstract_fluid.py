@@ -252,6 +252,11 @@ class AbstractFluid(ABC):
         return self.__specific_heat
 
     @property
+    def specific_volume(self) -> float:
+        """Mass specific volume [m3/kg]."""
+        return 1 / self.density
+
+    @property
     def surface_tension(self) -> float | None:
         """Surface tension [N/m]."""
         if self.__surface_tension is None:

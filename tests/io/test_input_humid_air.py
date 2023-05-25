@@ -8,7 +8,7 @@ class TestInputHumidAir:
         "coolprop_input, coolprop_key",
         [
             (InputHumidAir.altitude(300), "P"),
-            (InputHumidAir.density(1.2), "Vha"),
+            (InputHumidAir.density(1.25), "Vha"),
             (InputHumidAir.dew_temperature(10), "D"),
             (InputHumidAir.enthalpy(2e4), "Hha"),
             (InputHumidAir.entropy(1e4), "Sha"),
@@ -16,6 +16,7 @@ class TestInputHumidAir:
             (InputHumidAir.partial_pressure(1e3), "P_w"),
             (InputHumidAir.pressure(101325), "P"),
             (InputHumidAir.relative_humidity(50), "R"),
+            (InputHumidAir.specific_volume(0.8), "Vha"),
             (InputHumidAir.temperature(20), "T"),
             (InputHumidAir.wet_bulb_temperature(15), "B"),
         ],
@@ -29,7 +30,7 @@ class TestInputHumidAir:
         "coolprop_input, value",
         [
             (InputHumidAir.altitude(300), 97772.56060611102),
-            (InputHumidAir.density(1.2), 0.8333333333333334),
+            (InputHumidAir.density(1.25), 0.8),
             (InputHumidAir.dew_temperature(10), 283.15),
             (InputHumidAir.enthalpy(2e4), 2e4),
             (InputHumidAir.entropy(1e4), 1e4),
@@ -37,6 +38,7 @@ class TestInputHumidAir:
             (InputHumidAir.partial_pressure(1e3), 1e3),
             (InputHumidAir.pressure(101325), 101325),
             (InputHumidAir.relative_humidity(50), 0.5),
+            (InputHumidAir.specific_volume(0.8), 0.8),
             (InputHumidAir.temperature(20), 293.15),
             (InputHumidAir.wet_bulb_temperature(15), 288.15),
         ],

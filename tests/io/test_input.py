@@ -14,6 +14,7 @@ class TestInput:
             (Input.internal_energy(1e4), CoolProp.iUmass),
             (Input.pressure(101325), CoolProp.iP),
             (Input.quality(50), CoolProp.iQ),
+            (Input.specific_volume(1 / 999), CoolProp.iDmass),
             (Input.temperature(20), CoolProp.iT),
         ],
     )
@@ -31,6 +32,7 @@ class TestInput:
             (Input.internal_energy(1e4), 1e4),
             (Input.pressure(101325), 101325),
             (Input.quality(50), 0.5),
+            (Input.specific_volume(1 / 999), 999),
             (Input.temperature(20), 293.15),
         ],
     )
