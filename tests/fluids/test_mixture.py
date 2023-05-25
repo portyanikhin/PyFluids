@@ -16,7 +16,7 @@ class TestMixture:
             (
                 [FluidsList.Water],
                 mixture.fractions,
-                "Invalid input! Fluids and fractions should be of the same length.",
+                "Invalid input! Fluids and fractions " "should be of the same length.",
             ),
             (
                 [FluidsList.MPG, FluidsList.MEG],
@@ -27,17 +27,20 @@ class TestMixture:
             (
                 mixture.fluids,
                 [-200, 50],
-                "Invalid component mass fractions! All of them should be in (0;100) %.",
+                "Invalid components mass fractions! "
+                "All of them should be in (0;100) %.",
             ),
             (
                 mixture.fluids,
                 [50, 200],
-                "Invalid component mass fractions! All of them should be in (0;100) %.",
+                "Invalid components mass fractions! "
+                "All of them should be in (0;100) %.",
             ),
             (
                 mixture.fluids,
                 [80, 80],
-                "Invalid component mass fractions! Their sum should be equal to 100 %.",
+                "Invalid components mass fractions! "
+                "Their sum should be equal to 100 %.",
             ),
         ],
     )

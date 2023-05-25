@@ -4,6 +4,7 @@ import json
 
 from CoolProp.HumidAirProp import HAPropsSI
 
+from ..config import UnitConverter, UnitsSystem
 from ..io import InputHumidAir, OutputsValidator
 
 __all__ = ["HumidAir"]
@@ -29,6 +30,12 @@ class HumidAir:
         self.__specific_heat: float | None = None
         self.__temperature: float | None = None
         self.__wet_bulb_temperature: float | None = None
+        self._unit_converter: UnitConverter = UnitConverter()
+
+    @property
+    def units_system(self) -> UnitsSystem:
+        """Configured units system."""
+        return self._unit_converter.units_system
 
     @property
     def compressibility(self) -> float:
@@ -53,9 +60,14 @@ class HumidAir:
 
     @property
     def dew_temperature(self) -> float:
-        """Dew-point temperature [°C]."""
+        """
+        Dew-point temperature
+        [by default, °C; you can change this using the configuration file].
+        """
         if self.__dew_temperature is None:
-            self.__dew_temperature = self._keyed_output("D") - 273.15
+            self.__dew_temperature = self._unit_converter.convert_temperature_from_si(
+                self._keyed_output("D")
+            )
         return self.__dew_temperature
 
     @property
@@ -112,9 +124,16 @@ class HumidAir:
 
     @property
     def relative_humidity(self) -> float:
-        """Relative humidity ratio [%]."""
+        """
+        Relative humidity ratio
+        [by default, %; you can change this using the configuration file].
+        """
         if self.__relative_humidity is None:
-            self.__relative_humidity = self._keyed_output("R") * 1e2
+            self.__relative_humidity = (
+                self._unit_converter.convert_decimal_fraction_from_si(
+                    self._keyed_output("R")
+                )
+            )
         return self.__relative_humidity
 
     @property
@@ -126,16 +145,28 @@ class HumidAir:
 
     @property
     def temperature(self) -> float:
-        """Dry-bulb temperature [°C]."""
+        """
+        Dry-bulb temperature
+        [by default, °C; you can change this using the configuration file].
+        """
         if self.__temperature is None:
-            self.__temperature = self._keyed_output("T") - 273.15
+            self.__temperature = self._unit_converter.convert_temperature_from_si(
+                self._keyed_output("T")
+            )
         return self.__temperature
 
     @property
     def wet_bulb_temperature(self) -> float:
-        """Wet-bulb temperature [°C]."""
+        """
+        Wet-bulb temperature
+        [by default, °C; you can change this using the configuration file].
+        """
         if self.__wet_bulb_temperature is None:
-            self.__wet_bulb_temperature = self._keyed_output("B") - 273.15
+            self.__wet_bulb_temperature = (
+                self._unit_converter.convert_temperature_from_si(
+                    self._keyed_output("B")
+                )
+            )
         return self.__wet_bulb_temperature
 
     def factory(self) -> HumidAir:
@@ -208,7 +239,8 @@ class HumidAir:
         """
         The process of cooling without dehumidification to a given temperature.
 
-        :param temperature: Temperature [°C].
+        :param temperature: Temperature
+            [by default, °C; you can change this using the configuration file].
         :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
         :return: The state of the humid air at the end of the process.
         :raises ValueError: If temperature or pressure drop is invalid.
@@ -235,8 +267,10 @@ class HumidAir:
         The process of cooling with dehumidification
         to a given temperature and relative humidity ratio.
 
-        :param temperature: Temperature [°C].
-        :param relative_humidity: Relative humidity ratio [%].
+        :param temperature: Temperature
+            [by default, °C; you can change this using the configuration file].
+        :param relative_humidity: Relative humidity ratio
+            [by default, %; you can change this using the configuration file].
         :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
         :return: The state of the humid air at the end of the process.
         :raises ValueError: If temperature, relative humidity ratio or
@@ -255,7 +289,8 @@ class HumidAir:
         The process of cooling with dehumidification
         to a given temperature and absolute humidity ratio.
 
-        :param temperature: Temperature [°C].
+        :param temperature: Temperature
+            [by default, °C; you can change this using the configuration file].
         :param humidity: Absolute humidity ratio [kg/kg d.a.].
         :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
         :return: The state of the humid air at the end of the process.
@@ -276,7 +311,8 @@ class HumidAir:
         to a given enthalpy and relative humidity ratio.
 
         :param enthalpy: Enthalpy [J/kg].
-        :param relative_humidity: Relative humidity ratio [%].
+        :param relative_humidity: Relative humidity ratio
+            [by default, %; you can change this using the configuration file].
         :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
         :return: The state of the humid air at the end of the process.
         :raises ValueError: If enthalpy, relative humidity ratio or
@@ -314,7 +350,8 @@ class HumidAir:
         """
         The process of heating to a given temperature.
 
-        :param temperature: Temperature [°C].
+        :param temperature: Temperature
+            [by default, °C; you can change this using the configuration file].
         :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
         :return: The state of the humid air at the end of the process.
         :raises ValueError: If temperature or pressure drop is invalid.
@@ -343,7 +380,8 @@ class HumidAir:
         The process of humidification by water (isenthalpic)
         to a given relative humidity ratio.
 
-        :param relative_humidity: Relative humidity ratio [%].
+        :param relative_humidity: Relative humidity ratio
+            [by default, %; you can change this using the configuration file].
         :return: The state of the humid air at the end of the process.
         :raises ValueError: If relative humidity ratio is invalid.
         """
@@ -373,7 +411,8 @@ class HumidAir:
         The process of humidification by steam (isothermal)
         to a given relative humidity ratio.
 
-        :param relative_humidity: Relative humidity ratio [%].
+        :param relative_humidity: Relative humidity ratio
+            [by default, %; you can change this using the configuration file].
         :return: The state of the humid air at the end of the process.
         :raises ValueError: If relative humidity ratio is invalid.
         """
@@ -527,7 +566,10 @@ class HumidAir:
         pressure_drop: float = 0,
     ):
         if first_input.coolprop_key == "T":
-            self.__check_temperature(first_input.value - 273.15, True)
+            self.__check_temperature(
+                self._unit_converter.convert_temperature_from_si(first_input.value),
+                True,
+            )
         if first_input.coolprop_key == "Hha":
             self.__check_enthalpy(first_input.value, True)
         self.__check_pressure_drop(pressure_drop)
@@ -589,7 +631,11 @@ class HumidAir:
             < self.with_state(
                 InputHumidAir.pressure(self.pressure),
                 InputHumidAir.temperature(self.dew_temperature),
-                InputHumidAir.relative_humidity(100),
+                InputHumidAir.relative_humidity(
+                    100
+                    if self.units_system == UnitsSystem.SIWithCelsiusAndPercents
+                    else 1
+                ),
             ).enthalpy
         ):
             raise ValueError(

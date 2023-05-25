@@ -7,6 +7,7 @@ import CoolProp
 from CoolProp import AbstractState
 from CoolProp.CoolProp import generate_update_pair
 
+from ..config import UnitConverter, UnitsSystem
 from ..enums import Phases
 from ..io import Input, OutputsValidator
 
@@ -44,6 +45,15 @@ class AbstractFluid(ABC):
         self.__temperature: float | None = None
         self.__triple_pressure: float | None = None
         self.__triple_temperature: float | None = None
+        self._unit_converter: UnitConverter = UnitConverter()
+        self._fraction_unit: str = (
+            " %" if self.units_system == UnitsSystem.SIWithCelsiusAndPercents else ""
+        )
+
+    @property
+    def units_system(self) -> UnitsSystem:
+        """Configured units system."""
+        return self._unit_converter.units_system
 
     @property
     def compressibility(self) -> float | None:
@@ -68,10 +78,17 @@ class AbstractFluid(ABC):
 
     @property
     def critical_temperature(self) -> float | None:
-        """Temperature at the critical point [°C]."""
+        """
+        Temperature at the critical point
+        [by default, °C; you can change this using the configuration file].
+        """
         if self.__critical_temperature is None:
             value = self._nullable_keyed_output(CoolProp.iT_critical)
-            self.__critical_temperature = value - 273.15 if value is not None else None
+            self.__critical_temperature = (
+                self._unit_converter.convert_temperature_from_si(value)
+                if value is not None
+                else None
+            )
         return self.__critical_temperature
 
     @property
@@ -104,10 +121,17 @@ class AbstractFluid(ABC):
 
     @property
     def freezing_temperature(self) -> float | None:
-        """Temperature at the freezing point (for incompressible fluids) [°C]."""
+        """
+        Temperature at the freezing point (for incompressible fluids)
+        [by default, °C; you can change this using the configuration file].
+        """
         if self.__freezing_temperature is None:
             value = self._nullable_keyed_output(CoolProp.iT_freeze)
-            self.__freezing_temperature = value - 273.15 if value is not None else None
+            self.__freezing_temperature = (
+                self._unit_converter.convert_temperature_from_si(value)
+                if value is not None
+                else None
+            )
         return self.__freezing_temperature
 
     @property
@@ -135,10 +159,17 @@ class AbstractFluid(ABC):
 
     @property
     def max_temperature(self) -> float:
-        """Maximum temperature limit [°C]."""
+        """
+        Maximum temperature limit
+        [by default, °C; you can change this using the configuration file].
+        """
         if self.__max_temperature is None:
             value = self._keyed_output(CoolProp.iT_max)
-            self.__max_temperature = value - 273.15 if value is not None else None
+            self.__max_temperature = (
+                self._unit_converter.convert_temperature_from_si(value)
+                if value is not None
+                else None
+            )
         return self.__max_temperature
 
     @property
@@ -150,10 +181,17 @@ class AbstractFluid(ABC):
 
     @property
     def min_temperature(self) -> float:
-        """Minimum temperature limit [°C]."""
+        """
+        Minimum temperature limit
+        [by default, °C; you can change this using the configuration file].
+        """
         if self.__min_temperature is None:
             value = self._keyed_output(CoolProp.iT_min)
-            self.__min_temperature = value - 273.15 if value is not None else None
+            self.__min_temperature = (
+                self._unit_converter.convert_temperature_from_si(value)
+                if value is not None
+                else None
+            )
         return self.__min_temperature
 
     @property
@@ -186,10 +224,17 @@ class AbstractFluid(ABC):
 
     @property
     def quality(self) -> float | None:
-        """Mass vapor quality [%]."""
+        """
+        Mass vapor quality
+        [by default, %; you can change this using the configuration file].
+        """
         if self.__quality is None:
             value = self._nullable_keyed_output(CoolProp.iQ)
-            self.__quality = value * 1e2 if value is not None else None
+            self.__quality = (
+                self._unit_converter.convert_decimal_fraction_from_si(value)
+                if value is not None
+                else None
+            )
         return self.__quality
 
     @property
@@ -217,10 +262,17 @@ class AbstractFluid(ABC):
 
     @property
     def temperature(self) -> float:
-        """Temperature [°C]."""
+        """
+        Temperature
+        [by default, °C; you can change this using the configuration file].
+        """
         if self.__temperature is None:
             value = self._keyed_output(CoolProp.iT)
-            self.__temperature = value - 273.15 if value is not None else None
+            self.__temperature = (
+                self._unit_converter.convert_temperature_from_si(value)
+                if value is not None
+                else None
+            )
         return self.__temperature
 
     @property
@@ -232,10 +284,17 @@ class AbstractFluid(ABC):
 
     @property
     def triple_temperature(self) -> float | None:
-        """Temperature at the triple point [°C]."""
+        """
+        Temperature at the triple point
+        [by default, °C; you can change this using the configuration file].
+        """
         if self.__triple_temperature is None:
             value = self._nullable_keyed_output(CoolProp.iT_triple)
-            self.__triple_temperature = value - 273.15 if value is not None else None
+            self.__triple_temperature = (
+                self._unit_converter.convert_temperature_from_si(value)
+                if value is not None
+                else None
+            )
         return self.__triple_temperature
 
     @abstractmethod
@@ -322,11 +381,15 @@ class AbstractFluid(ABC):
         The process of compression to a given pressure.
 
         :param pressure: Absolute pressure [Pa].
-        :param isentropic_efficiency: Compressor isentropic efficiency [%].
+        :param isentropic_efficiency: Compressor isentropic efficiency
+            [by default, %; you can change this using the configuration file].
         :return: The state of the fluid at the end of the process.
         :raises ValueError: If pressure or isentropic efficiency is invalid.
         """
-        if not 0 < isentropic_efficiency < 100:
+        isentropic_efficiency = self._unit_converter.convert_decimal_fraction_to_si(
+            isentropic_efficiency
+        )
+        if not 0 < isentropic_efficiency < 1:
             raise ValueError("Invalid compressor isentropic efficiency!")
         return self.with_state(
             Input.pressure(pressure),
@@ -336,7 +399,7 @@ class AbstractFluid(ABC):
                     self.isentropic_compression_to_pressure(pressure).enthalpy
                     - self.enthalpy
                 )
-                / (isentropic_efficiency * 1e-2)
+                / isentropic_efficiency
             ),
         )
 
@@ -375,11 +438,15 @@ class AbstractFluid(ABC):
         The process of expansion to a given pressure.
 
         :param pressure: Absolute pressure [Pa].
-        :param isentropic_efficiency: Expander isentropic efficiency [%].
+        :param isentropic_efficiency: Expander isentropic efficiency
+            [by default, %; you can change this using the configuration file].
         :return: The state of the fluid at the end of the process.
         :raises ValueError: If pressure or isentropic efficiency is invalid.
         """
-        if not 0 < isentropic_efficiency < 100:
+        isentropic_efficiency = self._unit_converter.convert_decimal_fraction_to_si(
+            isentropic_efficiency
+        )
+        if not 0 < isentropic_efficiency < 1:
             raise ValueError("Invalid expander isentropic efficiency!")
         return self.with_state(
             Input.pressure(pressure),
@@ -389,7 +456,7 @@ class AbstractFluid(ABC):
                     self.enthalpy
                     - self.isentropic_expansion_to_pressure(pressure).enthalpy
                 )
-                * (isentropic_efficiency * 1e-2)
+                * isentropic_efficiency
             ),
         )
 
@@ -399,7 +466,8 @@ class AbstractFluid(ABC):
         """
         The process of cooling to a given temperature.
 
-        :param temperature: Temperature [°C].
+        :param temperature: Temperature
+            [by default, °C; you can change this using the configuration file].
         :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
         :return: The state of the fluid at the end of the process.
         :raises ValueError: If temperature or pressure drop is invalid.
@@ -433,7 +501,8 @@ class AbstractFluid(ABC):
         """
         The process of heating to a given temperature.
 
-        :param temperature: Temperature [°C].
+        :param temperature: Temperature
+            [by default, °C; you can change this using the configuration file].
         :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
         :return: The state of the fluid at the end of the process.
         :raises ValueError: If temperature or pressure drop is invalid.
@@ -474,8 +543,9 @@ class AbstractFluid(ABC):
         """
         Bubble point at a given temperature.
 
-        :param temperature: Temperature [°C].
-        :return: TBubble point at a given temperature.
+        :param temperature: Temperature
+            [by default, °C; you can change this using the configuration file].
+        :return: Bubble point at a given temperature.
         """
         return self.with_state(Input.temperature(temperature), Input.quality(0))
 
@@ -486,16 +556,27 @@ class AbstractFluid(ABC):
         :param pressure: Absolute pressure [Pa].
         :return: Dew point at a given pressure.
         """
-        return self.with_state(Input.pressure(pressure), Input.quality(100))
+        return self.with_state(
+            Input.pressure(pressure),
+            Input.quality(
+                100 if self.units_system == UnitsSystem.SIWithCelsiusAndPercents else 1
+            ),
+        )
 
     def dew_point_at_temperature(self, temperature: float) -> AbstractFluid:
         """
         Dew point at a given temperature.
 
-        :param temperature: Temperature [°C].
+        :param temperature: Temperature
+            [by default, °C; you can change this using the configuration file].
         :return: Dew point at a given temperature.
         """
-        return self.with_state(Input.temperature(temperature), Input.quality(100))
+        return self.with_state(
+            Input.temperature(temperature),
+            Input.quality(
+                100 if self.units_system == UnitsSystem.SIWithCelsiusAndPercents else 1
+            ),
+        )
 
     def two_phase_point_at_pressure(
         self, pressure: float, quality: float
@@ -504,7 +585,8 @@ class AbstractFluid(ABC):
         Two phase point at a given pressure.
 
         :param pressure: Absolute pressure [Pa].
-        :param quality: Vapor quality [%].
+        :param quality: Vapor quality
+            [by default, %; you can change this using the configuration file].
         :return: Two phase point at a given pressure.
         """
         return self.with_state(Input.pressure(pressure), Input.quality(quality))

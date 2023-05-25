@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from .abstract_input import AbstractInput
+from ..config import UnitConverter
 
 __all__ = ["InputHumidAir"]
 
@@ -51,10 +52,11 @@ class InputHumidAir(AbstractInput):
         """
         Dew-point temperature.
 
-        :param value: The value of the input [°C].
+        :param value: The value of the input
+            [by default, °C; you can change this using the configuration file].
         :return: Dew-point temperature for the input.
         """
-        return cls("D", value + 273.15)
+        return cls("D", UnitConverter().convert_temperature_to_si(value))
 
     @classmethod
     def enthalpy(cls, value: float) -> InputHumidAir:
@@ -111,27 +113,30 @@ class InputHumidAir(AbstractInput):
         """
         Relative humidity.
 
-        :param value: The value of the input [%].
+        :param value: The value of the input
+            [by default, %; you can change this using the configuration file].
         :return: Relative humidity for the input.
         """
-        return cls("R", value * 1e-2)
+        return cls("R", UnitConverter().convert_decimal_fraction_to_si(value))
 
     @classmethod
     def temperature(cls, value: float) -> InputHumidAir:
         """
         Temperature.
 
-        :param value: The value of the input [°C].
+        :param value: The value of the input
+            [by default, °C; you can change this using the configuration file].
         :return: Temperature for the input.
         """
-        return cls("T", value + 273.15)
+        return cls("T", UnitConverter().convert_temperature_to_si(value))
 
     @classmethod
     def wet_bulb_temperature(cls, value: float) -> InputHumidAir:
         """
         Wet-bulb temperature.
 
-        :param value: The value of the input [°C].
+        :param value: The value of the input
+            [by default, °C; you can change this using the configuration file].
         :return: Wet-bulb temperature for the input.
         """
-        return cls("B", value + 273.15)
+        return cls("B", UnitConverter().convert_temperature_to_si(value))

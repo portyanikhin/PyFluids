@@ -3,6 +3,7 @@ from __future__ import annotations
 from CoolProp import AbstractState
 
 from .abstract_fluid import AbstractFluid
+from ..config import UnitsSystem
 from ..enums import FluidsList, Mix
 
 __all__ = ["Fluid"]
@@ -16,23 +17,28 @@ class Fluid(AbstractFluid):
         Pure/pseudo-pure fluid or binary mixture.
 
         :param name: Selected fluid name.
-        :param fraction: Mass-based or volume-based fraction for binary mixtures [%].
+        :param fraction: Mass-based or volume-based fraction for binary mixtures
+            [by default, %; you can change this using the configuration file].
         :raises ValueError: If fraction is invalid.
         """
+        super().__init__()
         if fraction is not None and (
             not name.fraction_min <= fraction <= name.fraction_max
         ):
             raise ValueError(
                 f"Invalid fraction value! It should be in "
                 f"[{'{0:g}'.format(name.fraction_min)};"
-                f"{'{0:g}'.format(name.fraction_max)}] %. "
-                f"Entered value = {'{0:g}'.format(fraction)} %."
+                f"{'{0:g}'.format(name.fraction_max)}]{self._fraction_unit}. "
+                f"Entered value = {'{0:g}'.format(fraction)}{self._fraction_unit}."
             )
         if fraction is None and not name.pure:
             raise ValueError("Need to define fraction!")
-        super().__init__()
         self.__name = name
-        self.__fraction = 100 if self.__name.pure else fraction
+        self.__fraction = (
+            (100 if self.units_system == UnitsSystem.SIWithCelsiusAndPercents else 1)
+            if self.__name.pure
+            else fraction
+        )
         self._backend = AbstractState(
             self.__name.coolprop_backend, self.__name.coolprop_name
         )
@@ -49,7 +55,10 @@ class Fluid(AbstractFluid):
 
     @property
     def fraction(self) -> float:
-        """Mass-based or volume-based fraction for binary mixtures [%]."""
+        """
+        Mass-based or volume-based fraction for binary mixtures
+        [by default, %; you can change this using the configuration file].
+        """
         return self.__fraction
 
     def mixing(
@@ -67,9 +76,13 @@ class Fluid(AbstractFluid):
 
     def __set_fraction(self):
         if self.__name.mix_type == Mix.Mass:
-            self._backend.set_mass_fractions([self.__fraction * 1e-2])
+            self._backend.set_mass_fractions(
+                [self._unit_converter.convert_decimal_fraction_to_si(self.__fraction)]
+            )
         else:
-            self._backend.set_volu_fractions([self.__fraction * 1e-2])
+            self._backend.set_volu_fractions(
+                [self._unit_converter.convert_decimal_fraction_to_si(self.__fraction)]
+            )
 
     def __is_valid_fluids_for_mixing(
         self, first: AbstractFluid, second: AbstractFluid

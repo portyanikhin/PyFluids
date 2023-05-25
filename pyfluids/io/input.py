@@ -3,6 +3,7 @@ from __future__ import annotations
 import CoolProp
 
 from .abstract_input import AbstractInput
+from ..config import UnitConverter
 
 __all__ = ["Input"]
 
@@ -74,17 +75,19 @@ class Input(AbstractInput):
         """
         Mass vapor quality.
 
-        :param value: The value of the input [%].
+        :param value: The value of the input
+            [by default, %; you can change this using the configuration file].
         :return: Mass vapor quality for the input.
         """
-        return cls(CoolProp.iQ, value * 1e-2)
+        return cls(CoolProp.iQ, UnitConverter().convert_decimal_fraction_to_si(value))
 
     @classmethod
     def temperature(cls, value: float) -> Input:
         """
         Temperature.
 
-        :param value: The value of the input [°C].
+        :param value: The value of the input
+            [by default, °C; you can change this using the configuration file].
         :return: Temperature for the input.
         """
-        return cls(CoolProp.iT, value + 273.15)
+        return cls(CoolProp.iT, UnitConverter().convert_temperature_to_si(value))
