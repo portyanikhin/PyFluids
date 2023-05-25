@@ -22,7 +22,7 @@ PYFLUIDS_JSON_CONTENT = """
 
 PYPROJECT_TOML_CONTENT = """
 [tool.pyfluids]
-units_system = SIWithCelsiusAndPercents
+units_system = "SIWithCelsiusAndPercents"
 """
 
 TOX_INI_CONTENT = PYFLUIDS_INI_CONTENT
