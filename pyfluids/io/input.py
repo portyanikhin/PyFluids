@@ -82,6 +82,16 @@ class Input(AbstractInput):
         return cls(CoolProp.iQ, UnitConverter().convert_decimal_fraction_to_si(value))
 
     @classmethod
+    def specific_volume(cls, value: float) -> Input:
+        """
+        Mass specific volume.
+
+        :param value: The value of the input [m3/kg].
+        :return: Mass specific volume for the input.
+        """
+        return cls(CoolProp.iDmass, 1 / value)
+
+    @classmethod
     def temperature(cls, value: float) -> Input:
         """
         Temperature.
