@@ -211,15 +211,12 @@ class TestHumidAir:
             InputHumidAir.temperature(20),
             InputHumidAir.relative_humidity(40),
         )
-        assert all(
+        keys = [
             key
-            in [
-                k.split("__")[-1]
-                for k in vars(humid_air).keys()
-                if not k.split("__")[-1].startswith("_")
-            ]
-            for key in list(humid_air.as_dict().keys())
-        )
+            for key in dir(humid_air.__class__)
+            if isinstance(getattr(humid_air.__class__, key), property)
+        ]
+        assert all(key in keys for key in list(humid_air.as_dict().keys()))
 
     def coolprop_interface(self, output_key: str) -> float:
         value = HAPropsSI(

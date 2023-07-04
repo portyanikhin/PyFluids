@@ -643,15 +643,13 @@ class AbstractFluid(ABC):
 
     def as_dict(self) -> dict[str, str | float | None]:
         """Converts the fluid instance to a dict."""
-        dictionary = {
-            self.__select(key): getattr(self, self.__select(key))
-            for key, value in vars(self).items()
-            if not self.__select(key).startswith("_")
-        }
-        return {
-            key: dictionary[key]
-            for key in list(dictionary.keys())[-2:] + list(dictionary.keys())[:-2]
-        }
+        keys = [
+            key
+            for key in dir(self.__class__)
+            if isinstance(getattr(self.__class__, key), property)
+        ]
+        values = [getattr(self, key) for key in keys]
+        return {key: value for key, value in zip(keys, values)}
 
     def _nullable_keyed_output(self, coolprop_key: int) -> float | None:
         try:
@@ -704,7 +702,3 @@ class AbstractFluid(ABC):
     def __check_pressure_drop(pressure_drop: float):
         if pressure_drop < 0:
             raise ValueError("Invalid pressure drop in the heat exchanger!")
-
-    @staticmethod
-    def __select(key: str) -> str:
-        return key.split("__")[-1]
