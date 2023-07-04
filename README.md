@@ -332,8 +332,6 @@ As a result:
 
 ```json5
 {
-    "name": "R32",
-    "fraction": 100,
     "compressibility": 0.8266625877210833,
     "conductivity": 0.013435453854396475,
     "critical_pressure": 5782000.0,
@@ -342,23 +340,28 @@ As a result:
     "dynamic_viscosity": 1.2606543144761657e-05,
     "enthalpy": 516105.7800378023,
     "entropy": 2136.2654412978777,
+    "fraction": 100,
     "freezing_temperature": null,
     "internal_energy": 479357.39743435377,
+    "kinematic_viscosity": 4.869105418289953e-07,
     "max_pressure": 70000000.0,
     "max_temperature": 161.85000000000002,
     "min_pressure": 47.999893876059375,
     "min_temperature": -136.80999999999997,
     "molar_mass": 0.052024,
+    "name": "R32",
     "phase": "TwoPhase",
     "prandtl": 1.2252282243443504,
     "pressure": 951448.019691762,
     "quality": 100.0,
     "sound_speed": 209.6337575990297,
     "specific_heat": 1305.7899441785378,
+    "specific_volume": 0.03862363664945844,
     "surface_tension": 0.010110117241546162,
     "temperature": 5.0,
     "triple_pressure": 47.999893876059375,
-    "triple_temperature": -136.80999999999997
+    "triple_temperature": -136.80999999999997,
+    "units_system": "SIWithCelsiusAndPercents"
 }
 ```
 
@@ -372,7 +375,7 @@ For example:
 from pyfluids import Fluid, FluidsList
 
 refrigerant = Fluid(FluidsList.R32).dew_point_at_temperature(5)
-print(refrigerant.as_dict())  # {'name': R32, 'fraction': 100, 'compressibility': ...
+print(refrigerant.as_dict())  # {'compressibility': 0.8266625877210833, 'conductivity': ... 
 ```
 
 ### Deep cloning
