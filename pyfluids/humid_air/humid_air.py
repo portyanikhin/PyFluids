@@ -494,11 +494,13 @@ class HumidAir:
 
     def as_dict(self) -> dict[str, float]:
         """Converts the humid air to a dict."""
-        return {
-            self.__select(key): getattr(self, self.__select(key))
-            for key, value in vars(self).items()
-            if not self.__select(key).startswith("_")
-        }
+        keys = [
+            key
+            for key in dir(self.__class__)
+            if isinstance(getattr(self.__class__, key), property)
+        ]
+        values = [getattr(self, key) for key in keys]
+        return {key: value for key, value in zip(keys, values)}
 
     def _keyed_output(self, coolprop_key: str) -> float:
         self.__check_inputs()
@@ -652,7 +654,3 @@ class HumidAir:
     def __check_pressure_drop(pressure_drop: float):
         if pressure_drop < 0:
             raise ValueError("Invalid pressure drop in the heat exchanger!")
-
-    @staticmethod
-    def __select(key: str) -> str:
-        return key.split("__")[-1]

@@ -119,12 +119,9 @@ class TestMixture:
 
     def test_as_dict_always_returns_only_public_properties(self):
         fluid = self.mixture.with_state(Input.pressure(101325), Input.temperature(30))
-        assert all(
+        keys = [
             key
-            in [
-                k.split("__")[-1]
-                for k in vars(fluid).keys()
-                if not k.split("__")[-1].startswith("_")
-            ]
-            for key in list(fluid.as_dict().keys())
-        )
+            for key in dir(fluid.__class__)
+            if isinstance(getattr(fluid.__class__, key), property)
+        ]
+        assert all(key in keys for key in list(fluid.as_dict().keys()))
