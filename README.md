@@ -14,6 +14,13 @@ A simple, full-featured, lightweight [CoolProp](http://www.coolprop.org) wrapper
 
 - [How to install](#how-to-install)
 - [Project structure](#project-structure)
+- [Units systems](#units-systems)
+  - [Available units systems](#available-units-systems)
+  - [Available types of configuration files](#available-types-of-configuration-files)
+    - [`pyfluids.ini` example](#pyfluidsini-example)
+    - [`pyfluids.json` example](#pyfluidsjson-example)
+    - [`pyproject.toml` example](#pyprojecttoml-example)
+    - [`tox.ini` example](#toxini-example)
 - [List of properties](#list-of-properties)
     - [Properties of `Fluid` and `Mixture` instances](#properties-of-fluid-and-mixture-instances)
     - [Properties of `HumidAir` instances](#properties-of-humidair-instances)
@@ -50,6 +57,61 @@ pip install pyfluids
 * `HumidAir` class - implementation of real humid air.
 * `InputHumidAir` class - inputs for the `HumidAir` class.
 
+## Units systems
+
+Using a configuration file, you can choose the units system 
+that will be used in your project (for both inputs and outputs of `PyFluids`).
+
+### Available units systems
+
+- **SI (`UnitsSystem.SI`):**
+    - temperature unit - Kelvin _(K)_;
+    - decimal fraction unit - dimensionless _(from 0 to 1)_;
+- **SI with Celsius (`UnitsSystem.SIWithCelsius`):**
+    - temperature unit - degree Celsius _(°C)_;
+    - decimal fraction unit - dimensionless _(from 0 to 1)_;
+- **SI with Celsius and percents (`UnitsSystem.SIWithCelsiusAndPercents`) _- by default_:**
+    - temperature unit - degree Celsius _(°C)_;
+    - decimal fraction unit - percent _(%, from 0 to 100)_.
+
+### Available types of configuration files
+
+- `pyfluids.ini`;
+- `pyfluids.json`;
+- `pyproject.toml`;
+- `tox.ini`.
+
+#### `pyfluids.ini` example
+
+```ini
+[pyfluids]
+units_system = SI
+```
+
+#### `pyfluids.json` example
+
+```json5
+{
+    "pyfluids": {
+        "units_system": "SIWithCelsius"
+    }
+}
+```
+
+#### `pyproject.toml` example
+
+```toml
+[tool.pyfluids]
+units_system = "SIWithCelsiusAndPercents"
+```
+
+#### `tox.ini` example
+
+```ini
+[pyfluids]
+units_system = SI
+```
+
 ## List of properties
 
 If the required property is not present in the instance of the fluid, then you can add it by extending
@@ -60,36 +122,38 @@ the `Fluid`, `Mixture` or `HumidAir` classes (see [how to add other properties](
 * `compressibility` - compressibility factor _(dimensionless)_.
 * `conductivity` - thermal conductivity _(W/m/K)_.
 * `critical_pressure` - absolute pressure at the critical point _(Pa)_.
-* `critical_temperature` - temperature at the critical point _(°C)_.
+* `critical_temperature` - temperature at the critical point _(by default, °C; see [how to change it](#units-systems))_.
 * `density` - mass density _(kg/m3)_.
 * `dynamic_viscosity` - dynamic viscosity _(Pa*s)_.
 * `enthalpy` - mass specific enthalpy _(J/kg)_.
 * `entropy` - mass specific entropy _(J/kg/K)_.
-* `freezing_temperature` - temperature at the freezing point (for incompressible fluids) _(°C)_.
+* `freezing_temperature` - temperature at the freezing point (for incompressible fluids) _(by default, °C; see [how to change it](#units-systems))_.
 * `internal_energy` - mass specific internal energy _(J/kg)_.
 * `kinematic_viscosity` - kinematic viscosity _(m2/s)_.
 * `max_pressure` - maximum pressure limit _(Pa)_.
-* `max_temperature` - maximum temperature limit _(°C)_.
+* `max_temperature` - maximum temperature limit _(by default, °C; see [how to change it](#units-systems))_.
 * `min_pressure` - minimum pressure limit _(Pa)_.
-* `min_temperature` - minimum temperature limit _(°C)_.
+* `min_temperature` - minimum temperature limit _(by default, °C; see [how to change it](#units-systems))_.
 * `molar_mass` - molar mass _(kg/mol)_.
 * `phase` - phase state _(enum)_.
 * `prandtl` - Prandtl number _(dimensionless)_.
 * `pressure` - absolute pressure _(Pa)_.
-* `quality` - mass vapor quality _(%)_.
+* `quality` - mass vapor quality _(by default, %; see [how to change it](#units-systems))_.
 * `sound_speed` - sound speed _(m/s)_.
 * `specific_heat` - mass specific constant pressure specific heat _(J/kg/K)_.
+* `specific_volume` - mass specific volume _(m3/kg)_.
 * `surface_tension` - surface tension _(N/m)_.
-* `temperature` - temperature _(°C)_.
+* `temperature` - temperature _(by default, °C; see [how to change it](#units-systems))_.
 * `triple_pressure` - absolute pressure at the triple point _(Pa)_.
-* `triple_temperature` - temperature at the triple point _(°C)_.
+* `triple_temperature` - temperature at the triple point _(by default, °C; see [how to change it](#units-systems))_.
+* `units_system` - configured units system _(enum)_.
 
 ### Properties of `HumidAir` instances
 
 * `compressibility` - compressibility factor _(dimensionless)_.
 * `conductivity` - thermal conductivity _(W/m/K)_.
 * `density` - mass density per humid air unit _(kg/m3)_.
-* `dew_temperature` - dew-point temperature _(°C)_.
+* `dew_temperature` - dew-point temperature _(by default, °C; see [how to change it](#units-systems))_.
 * `dynamic_viscosity` - dynamic viscosity _(Pa*s)_.
 * `enthalpy` - mass specific enthalpy per humid air _(J/kg)_.
 * `entropy` - mass specific entropy per humid air _(J/kg/K)_.
@@ -98,10 +162,12 @@ the `Fluid`, `Mixture` or `HumidAir` classes (see [how to add other properties](
 * `partial_pressure` - partial pressure of water vapor _(Pa)_.
 * `prandtl` - Prandtl number _(dimensionless)_.
 * `pressure` - absolute pressure _(Pa)_.
-* `relative_humidity` - relative humidity ratio _(%)_.
+* `relative_humidity` - relative humidity ratio _(by default, %; see [how to change it](#units-systems))_.
 * `specific_heat` - mass specific constant pressure specific heat per humid air _(J/kg/K)_.
-* `temperature` - dry-bulb temperature _(°C)_.
-* `wet_bulb_temperature` - wet-bulb temperature _(°C)_.
+* `specific_volume` - mass specific volume per humid air unit _(m3/kg)_.
+* `temperature` - dry-bulb temperature _(by default, °C; see [how to change it](#units-systems))_.
+* `wet_bulb_temperature` - wet-bulb temperature _(by default, °C; see [how to change it](#units-systems))_.
+* `units_system` - configured units system _(enum)_.
 
 ## List of methods
 
