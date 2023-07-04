@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyfluids"
-version = "2.3.2"
+version = "2.4.0rc1"
 description = "A simple, full-featured, lightweight CoolProp wrapper for Python"
 authors = [
     "Vladimir Portyanikhin <v.portyanikhin@ya.ru>",
