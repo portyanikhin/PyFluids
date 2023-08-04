@@ -166,6 +166,15 @@ class TestFluid:
         )
         assert self.fluid.specific_volume == 1 / self.fluid.density
 
+    def test_specify_phase_always_specifies_phase_for_all_further_calculations(self):
+        self.fluid.specify_phase(Phases.Gas)
+        with pytest.raises(ValueError):
+            self.fluid.update(Input.pressure(101325), Input.temperature(20))
+        self.fluid.unspecify_phase()
+        self.fluid.update(
+            Input.pressure(101325), Input.temperature(20)
+        )  # does not raise
+
     def test_equals_same_returns_true(self):
         origin = self.fluid.with_state(Input.pressure(101325), Input.temperature(5))
         same = self.fluid.with_state(Input.pressure(101325), Input.temperature(5))
