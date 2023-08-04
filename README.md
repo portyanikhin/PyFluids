@@ -50,12 +50,12 @@ pip install pyfluids
 
 ## Project structure
 
-* `Fluid` class - implementation of pure fluids and binary mixtures.
-* `Mixture` class - implementation of mixtures with pure fluids components.
-* `FluidsList` enum - list of all available fluids.
-* `Input` class - inputs for the `Fluid` and `Mixture` classes.
-* `HumidAir` class - implementation of real humid air.
-* `InputHumidAir` class - inputs for the `HumidAir` class.
+* `Fluid` class - an implementation of pure fluids and binary mixtures.
+* `Mixture` class - an implementation of mixtures with pure fluids components.
+* `FluidsList` enum - the list of all available fluids.
+* `Input` class - the inputs for the `Fluid` and `Mixture` classes.
+* `HumidAir` class - an implementation of real humid air.
+* `InputHumidAir` class - the inputs for the `HumidAir` class.
 
 ## Units systems
 
@@ -179,6 +179,8 @@ For more information, see the docstrings.
 * `with_state` - returns a new fluid instance with a defined state.
 * `update` - updates the state of the fluid.
 * `reset` - resets all non-trivial properties.
+* `specify_phase` - specify the phase state for all further calculations.
+* `unspecify_phase` - unspecify the phase state and go back to calculating it based on the inputs.
 * `clone` - performs deep (full) copy of the fluid instance.
 * `isentropic_compression_to_pressure` - the process of isentropic compression to a given pressure.
 * `compression_to_pressure` - the process of compression to a given pressure.
@@ -204,6 +206,8 @@ For more information, see the docstrings.
 * `with_state` - returns a new mixture instance with a defined state.
 * `update` - updates the state of the mixture.
 * `reset` - resets all non-trivial properties.
+* `specify_phase` - specify the phase state for all further calculations.
+* `unspecify_phase` - unspecify the phase state and go back to calculating it based on the inputs.
 * `clone` - performs deep (full) copy of the mixture instance.
 * `cooling_to_temperature` - the process of cooling to a given temperature.
 * `heating_to_temperature` - the process of heating to a given temperature.
