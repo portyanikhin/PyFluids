@@ -401,10 +401,10 @@ print(origin == clone)  # False
 
 ### Adding other properties
 
-* [Example for the `Fluid` and `Mixture`](https://github.com/portyanikhin/PyFluids/blob/main/tests/fluids/test_fluid_extended.py).
-* [Example for the `HumidAir`](https://github.com/portyanikhin/PyFluids/blob/main/tests/fluids/test_input_extended.py).
+* [An example for the `Fluid` and `Mixture`](https://github.com/portyanikhin/PyFluids/blob/main/tests/fluids/test_fluid_extended.py).
+* [An example for the `HumidAir`](https://github.com/portyanikhin/PyFluids/blob/main/tests/fluids/test_input_extended.py).
 
 ### Adding other inputs
 
-* [Example for the `Fluid` and `Mixture`](https://github.com/portyanikhin/PyFluids/blob/main/tests/humid_air/test_humid_air_extended.py).
-* [Example for the `HumidAir`](https://github.com/portyanikhin/PyFluids/blob/main/tests/humid_air/test_input_humid_air_extended.py).
+* [An example for the `Fluid` and `Mixture`](https://github.com/portyanikhin/PyFluids/blob/main/tests/humid_air/test_humid_air_extended.py).
+* [An example for the `HumidAir`](https://github.com/portyanikhin/PyFluids/blob/main/tests/humid_air/test_input_humid_air_extended.py).
