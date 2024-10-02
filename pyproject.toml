@@ -60,7 +60,7 @@ tomli = "2.0.2"
 
 [tool.poetry.group.test.dependencies]
 pytest = "7.4.4"
-pytest-asyncio = "0.21.2"
+pytest-asyncio = "0.23.8"
 pytest-cov = "4.1.0"
 
 [build-system]
