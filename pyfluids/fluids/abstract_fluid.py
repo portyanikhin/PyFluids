@@ -370,14 +370,16 @@ class AbstractFluid(ABC):
         Specify the phase state for all further calculations.
 
         :param phase: Phase state.
+        :return: Current fluid instance.
         """
         self._backend.specify_phase(phase.value)
         return self
 
     def unspecify_phase(self) -> AbstractFluid:
         """
-        Unspecify the phase state and
-        go back to calculating it based on the inputs.
+        Unspecify the phase state and go back to calculating it based on the inputs.
+
+        :return: Current fluid instance.
         """
         self._backend.unspecify_phase()
         return self
