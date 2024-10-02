@@ -242,7 +242,7 @@ class HumidAir:
         self, temperature: float, pressure_drop: float = 0
     ) -> HumidAir:
         """
-        The process of cooling without dehumidification to a given temperature.
+        The process of cooling without dehumidification to given temperature.
 
         :param temperature: Temperature
             [by default, °C; you can change this using the configuration file].
@@ -256,7 +256,7 @@ class HumidAir:
         self, enthalpy: float, pressure_drop: float = 0
     ) -> HumidAir:
         """
-        The process of cooling without dehumidification to a given enthalpy.
+        The process of cooling without dehumidification to given enthalpy.
 
         :param enthalpy: Enthalpy [J/kg].
         :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
@@ -270,7 +270,7 @@ class HumidAir:
     ) -> HumidAir:
         """
         The process of cooling with dehumidification
-        to a given temperature and relative humidity ratio.
+        to given temperature and relative humidity ratio.
 
         :param temperature: Temperature
             [by default, °C; you can change this using the configuration file].
@@ -292,7 +292,7 @@ class HumidAir:
     ) -> HumidAir:
         """
         The process of cooling with dehumidification
-        to a given temperature and absolute humidity ratio.
+        to given temperature and absolute humidity ratio.
 
         :param temperature: Temperature
             [by default, °C; you can change this using the configuration file].
@@ -313,7 +313,7 @@ class HumidAir:
     ) -> HumidAir:
         """
         The process of cooling with dehumidification
-        to a given enthalpy and relative humidity ratio.
+        to given enthalpy and relative humidity ratio.
 
         :param enthalpy: Enthalpy [J/kg].
         :param relative_humidity: Relative humidity ratio
@@ -334,7 +334,7 @@ class HumidAir:
     ) -> HumidAir:
         """
         The process of cooling with dehumidification
-        to a given enthalpy and absolute humidity ratio.
+        to given enthalpy and absolute humidity ratio.
 
         :param enthalpy: Enthalpy [J/kg].
         :param humidity: Absolute humidity ratio [kg/kg d.a.].
@@ -353,7 +353,7 @@ class HumidAir:
         self, temperature: float, pressure_drop: float = 0
     ) -> HumidAir:
         """
-        The process of heating to a given temperature.
+        The process of heating to given temperature.
 
         :param temperature: Temperature
             [by default, °C; you can change this using the configuration file].
@@ -369,7 +369,7 @@ class HumidAir:
         self, enthalpy: float, pressure_drop: float = 0
     ) -> HumidAir:
         """
-        The process of heating to a given enthalpy.
+        The process of heating to given enthalpy.
 
         :param enthalpy: Enthalpy [J/kg].
         :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
@@ -383,7 +383,7 @@ class HumidAir:
     ) -> HumidAir:
         """
         The process of humidification by water (isenthalpic)
-        to a given relative humidity ratio.
+        to given relative humidity ratio.
 
         :param relative_humidity: Relative humidity ratio
             [by default, %; you can change this using the configuration file].
@@ -398,7 +398,7 @@ class HumidAir:
     def humidification_by_water_to_absolute_humidity(self, humidity: float) -> HumidAir:
         """
         The process of humidification by water (isenthalpic)
-        to a given absolute humidity ratio.
+        to given absolute humidity ratio.
 
         :param humidity: Absolute humidity ratio [kg/kg d.a.].
         :return: The state of the humid air at the end of the process.
@@ -414,7 +414,7 @@ class HumidAir:
     ) -> HumidAir:
         """
         The process of humidification by steam (isothermal)
-        to a given relative humidity ratio.
+        to given relative humidity ratio.
 
         :param relative_humidity: Relative humidity ratio
             [by default, %; you can change this using the configuration file].
@@ -429,7 +429,7 @@ class HumidAir:
     def humidification_by_steam_to_absolute_humidity(self, humidity: float) -> HumidAir:
         """
         The process of humidification by steam (isothermal)
-        to a given absolute humidity ratio.
+        to given absolute humidity ratio.
 
         :param humidity: Absolute humidity ratio [kg/kg d.a.].
         :return: The state of the humid air at the end of the process.

@@ -365,24 +365,28 @@ class AbstractFluid(ABC):
         self.__surface_tension = None
         self.__temperature = None
 
-    def specify_phase(self, phase: Phases):
+    def specify_phase(self, phase: Phases) -> AbstractFluid:
         """
         Specify the phase state for all further calculations.
 
         :param phase: Phase state.
+        :return: Current fluid instance.
         """
         self._backend.specify_phase(phase.value)
+        return self
 
-    def unspecify_phase(self):
+    def unspecify_phase(self) -> AbstractFluid:
         """
-        Unspecify the phase state and
-        go back to calculating it based on the inputs.
+        Unspecify the phase state and go back to calculating it based on the inputs.
+
+        :return: Current fluid instance.
         """
         self._backend.unspecify_phase()
+        return self
 
     def isentropic_compression_to_pressure(self, pressure: float) -> AbstractFluid:
         """
-        The process of isentropic compression to a given pressure.
+        The process of isentropic compression to given pressure.
 
         :param pressure: Absolute pressure [Pa].
         :return: The state of the fluid at the end of the process.
@@ -398,7 +402,7 @@ class AbstractFluid(ABC):
         self, pressure: float, isentropic_efficiency: float
     ) -> AbstractFluid:
         """
-        The process of compression to a given pressure.
+        The process of compression to given pressure.
 
         :param pressure: Absolute pressure [Pa].
         :param isentropic_efficiency: Compressor isentropic efficiency
@@ -425,7 +429,7 @@ class AbstractFluid(ABC):
 
     def isenthalpic_expansion_to_pressure(self, pressure: float) -> AbstractFluid:
         """
-        The process of isenthalpic expansion to a given pressure.
+        The process of isenthalpic expansion to given pressure.
 
         :param pressure: Absolute pressure [Pa].
         :return: The state of the fluid at the end of the process.
@@ -439,7 +443,7 @@ class AbstractFluid(ABC):
 
     def isentropic_expansion_to_pressure(self, pressure: float) -> AbstractFluid:
         """
-        The process of isentropic expansion to a given pressure.
+        The process of isentropic expansion to given pressure.
 
         :param pressure: Absolute pressure [Pa].
         :return: The state of the fluid at the end of the process.
@@ -455,7 +459,7 @@ class AbstractFluid(ABC):
         self, pressure: float, isentropic_efficiency: float
     ) -> AbstractFluid:
         """
-        The process of expansion to a given pressure.
+        The process of expansion to given pressure.
 
         :param pressure: Absolute pressure [Pa].
         :param isentropic_efficiency: Expander isentropic efficiency
@@ -484,7 +488,7 @@ class AbstractFluid(ABC):
         self, temperature: float, pressure_drop: float = 0
     ) -> AbstractFluid:
         """
-        The process of cooling to a given temperature.
+        The process of cooling to given temperature.
 
         :param temperature: Temperature
             [by default, °C; you can change this using the configuration file].
@@ -502,7 +506,7 @@ class AbstractFluid(ABC):
         self, enthalpy: float, pressure_drop: float = 0
     ) -> AbstractFluid:
         """
-        The process of cooling to a given enthalpy.
+        The process of cooling to given enthalpy.
 
         :param enthalpy: Enthalpy [J/kg].
         :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
@@ -519,7 +523,7 @@ class AbstractFluid(ABC):
         self, temperature: float, pressure_drop: float = 0
     ) -> AbstractFluid:
         """
-        The process of heating to a given temperature.
+        The process of heating to given temperature.
 
         :param temperature: Temperature
             [by default, °C; you can change this using the configuration file].
@@ -537,7 +541,7 @@ class AbstractFluid(ABC):
         self, enthalpy: float, pressure_drop: float = 0
     ) -> AbstractFluid:
         """
-        The process of heating to a given enthalpy.
+        The process of heating to given enthalpy.
 
         :param enthalpy: Enthalpy [J/kg].
         :param pressure_drop: Pressure drop in the heat exchanger (optional) [Pa].
@@ -552,29 +556,29 @@ class AbstractFluid(ABC):
 
     def bubble_point_at_pressure(self, pressure: float) -> AbstractFluid:
         """
-        Bubble point at a given pressure.
+        Bubble point at given pressure.
 
         :param pressure: Absolute pressure [Pa].
-        :return: Bubble point at a given pressure.
+        :return: Bubble point at given pressure.
         """
         return self.with_state(Input.pressure(pressure), Input.quality(0))
 
     def bubble_point_at_temperature(self, temperature: float) -> AbstractFluid:
         """
-        Bubble point at a given temperature.
+        Bubble point at given temperature.
 
         :param temperature: Temperature
             [by default, °C; you can change this using the configuration file].
-        :return: Bubble point at a given temperature.
+        :return: Bubble point at given temperature.
         """
         return self.with_state(Input.temperature(temperature), Input.quality(0))
 
     def dew_point_at_pressure(self, pressure: float) -> AbstractFluid:
         """
-        Dew point at a given pressure.
+        Dew point at given pressure.
 
         :param pressure: Absolute pressure [Pa].
-        :return: Dew point at a given pressure.
+        :return: Dew point at given pressure.
         """
         return self.with_state(
             Input.pressure(pressure),
@@ -585,11 +589,11 @@ class AbstractFluid(ABC):
 
     def dew_point_at_temperature(self, temperature: float) -> AbstractFluid:
         """
-        Dew point at a given temperature.
+        Dew point at given temperature.
 
         :param temperature: Temperature
             [by default, °C; you can change this using the configuration file].
-        :return: Dew point at a given temperature.
+        :return: Dew point at given temperature.
         """
         return self.with_state(
             Input.temperature(temperature),
@@ -602,12 +606,12 @@ class AbstractFluid(ABC):
         self, pressure: float, quality: float
     ) -> AbstractFluid:
         """
-        Two phase point at a given pressure.
+        Two phase point at given pressure.
 
         :param pressure: Absolute pressure [Pa].
         :param quality: Vapor quality
             [by default, %; you can change this using the configuration file].
-        :return: Two phase point at a given pressure.
+        :return: Two phase point at given pressure.
         """
         return self.with_state(Input.pressure(pressure), Input.quality(quality))
 
