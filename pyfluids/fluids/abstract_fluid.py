@@ -365,20 +365,22 @@ class AbstractFluid(ABC):
         self.__surface_tension = None
         self.__temperature = None
 
-    def specify_phase(self, phase: Phases):
+    def specify_phase(self, phase: Phases) -> AbstractFluid:
         """
         Specify the phase state for all further calculations.
 
         :param phase: Phase state.
         """
         self._backend.specify_phase(phase.value)
+        return self
 
-    def unspecify_phase(self):
+    def unspecify_phase(self) -> AbstractFluid:
         """
         Unspecify the phase state and
         go back to calculating it based on the inputs.
         """
         self._backend.unspecify_phase()
+        return self
 
     def isentropic_compression_to_pressure(self, pressure: float) -> AbstractFluid:
         """
