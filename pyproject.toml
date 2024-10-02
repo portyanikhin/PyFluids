@@ -63,6 +63,9 @@ pytest = "8.3.3"
 pytest-asyncio = "0.24.0"
 pytest-cov = "5.0.0"
 
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
