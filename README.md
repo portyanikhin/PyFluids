@@ -8,7 +8,7 @@
 [![codecov](https://codecov.io/gh/portyanikhin/PyFluids/branch/main/graph/badge.svg?token=I1LL66AOJW)](https://codecov.io/gh/portyanikhin/PyFluids)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-black)](https://github.com/psf/black)
 
-A simple, full-featured, lightweight [CoolProp](http://www.coolprop.org) wrapper for Python.
+Simple, full-featured, lightweight [CoolProp](http://www.coolprop.org) wrapper for Python.
 
 ## Navigation
 
@@ -182,20 +182,20 @@ For more information, see the docstrings.
 * `specify_phase` - specify the phase state for all further calculations.
 * `unspecify_phase` - unspecify the phase state and go back to calculating it based on the inputs.
 * `clone` - performs deep (full) copy of the fluid instance.
-* `isentropic_compression_to_pressure` - the process of isentropic compression to a given pressure.
-* `compression_to_pressure` - the process of compression to a given pressure.
-* `isenthalpic_expansion_to_pressure` - the process of isenthalpic expansion to a given pressure.
-* `isentropic_expansion_to_pressure` - the process of isentropic expansion to a given pressure.
-* `expansion_to_pressure` - the process of expansion to a given pressure.
-* `cooling_to_temperature` - the process of cooling to a given temperature.
-* `cooling_to_enthalpy` - the process of cooling to a given enthalpy.
-* `heating_to_temperature` - the process of heating to a given temperature.
-* `heating_to_enthalpy` - the process of heating to a given enthalpy.
-* `bubble_point_at_pressure` - bubble point at a given pressure.
-* `bubble_point_at_temperature` - bubble point at a given temperature.
-* `dew_point_at_pressure` - dew point at a given pressure.
-* `dew_point_at_temperature` - dew point at a given temperature.
-* `two_phase_point_at_pressure` - two-phase point at a given pressure.
+* `isentropic_compression_to_pressure` - the process of isentropic compression to given pressure.
+* `compression_to_pressure` - the process of compression to given pressure.
+* `isenthalpic_expansion_to_pressure` - the process of isenthalpic expansion to given pressure.
+* `isentropic_expansion_to_pressure` - the process of isentropic expansion to given pressure.
+* `expansion_to_pressure` - the process of expansion to given pressure.
+* `cooling_to_temperature` - the process of cooling to given temperature.
+* `cooling_to_enthalpy` - the process of cooling to given enthalpy.
+* `heating_to_temperature` - the process of heating to given temperature.
+* `heating_to_enthalpy` - the process of heating to given enthalpy.
+* `bubble_point_at_pressure` - bubble point at given pressure.
+* `bubble_point_at_temperature` - bubble point at given temperature.
+* `dew_point_at_pressure` - dew point at given pressure.
+* `dew_point_at_temperature` - dew point at given temperature.
+* `two_phase_point_at_pressure` - two-phase point at given pressure.
 * `mixing` - the mixing process.
 * `as_json` - converts the fluid instance to a JSON string.
 * `as_dict` - converts the fluid instance to a dict.
@@ -209,8 +209,8 @@ For more information, see the docstrings.
 * `specify_phase` - specify the phase state for all further calculations.
 * `unspecify_phase` - unspecify the phase state and go back to calculating it based on the inputs.
 * `clone` - performs deep (full) copy of the mixture instance.
-* `cooling_to_temperature` - the process of cooling to a given temperature.
-* `heating_to_temperature` - the process of heating to a given temperature.
+* `cooling_to_temperature` - the process of cooling to given temperature.
+* `heating_to_temperature` - the process of heating to given temperature.
 * `as_json` - converts the mixture instance to a JSON string.
 * `as_dict` - converts the mixture instance to a dict.
 
@@ -221,18 +221,18 @@ For more information, see the docstrings.
 * `update` - updates the state of the humid air.
 * `reset` - resets all properties.
 * `clone` - performs deep (full) copy of the humid air instance.
-* `dry_cooling_to_temperature` - the process of cooling without dehumidification to a given temperature.
-* `dry_cooling_to_enthalpy` - the process of cooling without dehumidification to a given enthalpy.
-* `wet_cooling_to_temperature_and_relative_humidity` - the process of cooling with dehumidification to a given temperature and relative humidity ratio.
-* `wet_cooling_to_temperature_and_absolute_humidity` - the process of cooling with dehumidification to a given temperature and absolute humidity ratio.
-* `wet_cooling_to_enthalpy_and_relative_humidity` - the process of cooling with dehumidification to a given enthalpy and relative humidity ratio.
-* `wet_cooling_to_enthalpy_and_absolute_humidity` - the process of cooling with dehumidification to a given enthalpy and absolute humidity ratio.
-* `heating_to_temperature` - the process of heating to a given temperature.
-* `heating_to_enthalpy` - the process of heating to a given enthalpy.
-* `humidification_by_water_to_relative_humidity` - the process of humidification by water (isenthalpic) to a given relative humidity ratio.
-* `humidification_by_water_to_absolute_humidity` - the process of humidification by water (isenthalpic) to a given absolute humidity ratio.
-* `humidification_by_steam_to_relative_humidity` - the process of humidification by steam (isothermal) to a given relative humidity ratio.
-* `humidification_by_steam_to_absolute_humidity` - the process of humidification by steam (isothermal) to a given absolute humidity ratio.
+* `dry_cooling_to_temperature` - the process of cooling without dehumidification to given temperature.
+* `dry_cooling_to_enthalpy` - the process of cooling without dehumidification to given enthalpy.
+* `wet_cooling_to_temperature_and_relative_humidity` - the process of cooling with dehumidification to given temperature and relative humidity ratio.
+* `wet_cooling_to_temperature_and_absolute_humidity` - the process of cooling with dehumidification to given temperature and absolute humidity ratio.
+* `wet_cooling_to_enthalpy_and_relative_humidity` - the process of cooling with dehumidification to given enthalpy and relative humidity ratio.
+* `wet_cooling_to_enthalpy_and_absolute_humidity` - the process of cooling with dehumidification to given enthalpy and absolute humidity ratio.
+* `heating_to_temperature` - the process of heating to given temperature.
+* `heating_to_enthalpy` - the process of heating to given enthalpy.
+* `humidification_by_water_to_relative_humidity` - the process of humidification by water (isenthalpic) to given relative humidity ratio.
+* `humidification_by_water_to_absolute_humidity` - the process of humidification by water (isenthalpic) to given absolute humidity ratio.
+* `humidification_by_steam_to_relative_humidity` - the process of humidification by steam (isothermal) to given relative humidity ratio.
+* `humidification_by_steam_to_absolute_humidity` - the process of humidification by steam (isothermal) to given absolute humidity ratio.
 * `mixing` - the mixing process.
 * `as_json` - converts the humid air instance to a JSON string.
 * `as_dict` - converts the humid air instance to a dict.
