@@ -152,9 +152,11 @@ class TestFluid:
         )
         assert all(
             [
-                True
-                if actual[i] is None and expected[i] is None
-                else abs(actual[i] - expected[i]) < 1e-9
+                (
+                    True
+                    if actual[i] is None and expected[i] is None
+                    else abs(actual[i] - expected[i]) < 1e-9
+                )
                 for i in range(len(actual))
             ]
         )
@@ -170,8 +172,32 @@ class TestFluid:
         self.fluid.specify_phase(Phases.Gas)
         with pytest.raises(ValueError):
             self.fluid.update(Input.pressure(101325), Input.temperature(20))
+        with pytest.raises(ValueError):
+            self.fluid.with_state(Input.pressure(101325), Input.temperature(20))
         self.fluid.unspecify_phase()
         self.fluid.update(
+            Input.pressure(101325), Input.temperature(20)
+        )  # does not raise
+        self.fluid.with_state(
+            Input.pressure(101325), Input.temperature(20)
+        )  # does not raise
+
+    def test_specify_phase_always_with_methods_chaining_works_same_way(self):
+        with pytest.raises(ValueError):
+            self.fluid.specify_phase(Phases.Gas).update(
+                Input.pressure(101325), Input.temperature(20)
+            )
+        self.fluid.unspecify_phase()
+        with pytest.raises(ValueError):
+            self.fluid.specify_phase(Phases.Gas).with_state(
+                Input.pressure(101325), Input.temperature(20)
+            )
+        self.fluid.specify_phase(Phases.Gas)
+        self.fluid.unspecify_phase().update(
+            Input.pressure(101325), Input.temperature(20)
+        )  # does not raise
+        self.fluid.specify_phase(Phases.Gas)
+        self.fluid.unspecify_phase().with_state(
             Input.pressure(101325), Input.temperature(20)
         )  # does not raise
 

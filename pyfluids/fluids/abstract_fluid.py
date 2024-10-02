@@ -45,6 +45,7 @@ class AbstractFluid(ABC):
         self.__temperature: float | None = None
         self.__triple_pressure: float | None = None
         self.__triple_temperature: float | None = None
+        self.__specified_phase: Phases | None = None
         self._unit_converter: UnitConverter = UnitConverter()
         self._fraction_unit: str = (
             " %" if self.units_system == UnitsSystem.SIWithCelsiusAndPercents else ""
@@ -321,6 +322,8 @@ class AbstractFluid(ABC):
         :raises ValueError: If input is invalid.
         """
         fluid = self.factory()
+        if self.__specified_phase is not None:
+            fluid.specify_phase(self.__specified_phase)
         fluid.update(first_input, second_input)
         return fluid
 
@@ -373,6 +376,7 @@ class AbstractFluid(ABC):
         :return: Current fluid instance.
         """
         self._backend.specify_phase(phase.value)
+        self.__specified_phase = phase
         return self
 
     def unspecify_phase(self) -> AbstractFluid:
@@ -382,6 +386,7 @@ class AbstractFluid(ABC):
         :return: Current fluid instance.
         """
         self._backend.unspecify_phase()
+        self.__specified_phase = None
         return self
 
     def isentropic_compression_to_pressure(self, pressure: float) -> AbstractFluid:
