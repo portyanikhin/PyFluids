@@ -55,7 +55,7 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.8, <3.13"
 CoolProp = "6.6.0"
-tomli = "2.0.2"
+tomli = "2.2.1"
 
 [tool.poetry.group.test.dependencies]
 pytest = "8.3.4"
