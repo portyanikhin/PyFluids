@@ -392,5 +392,11 @@ class TestHumidAirProcesses:
         assert self.humid_air.mixing(1, first, 2, second) == self.humid_air.with_state(
             InputHumidAir.pressure(self.humid_air.pressure),
             InputHumidAir.enthalpy((1 * first.enthalpy + 2 * second.enthalpy) / 3),
-            InputHumidAir.humidity((1 * first.humidity + 2 * second.humidity) / 3),
+            InputHumidAir.humidity(
+                (
+                    1 * first.humidity * (1 + second.humidity)
+                    + 2 * second.humidity * (1 + first.humidity)
+                )
+                / (1 * (1 + second.humidity) + 2 * (1 + first.humidity))
+            ),
         )
