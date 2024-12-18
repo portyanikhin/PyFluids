@@ -474,16 +474,12 @@ class HumidAir:
             ),
             InputHumidAir.humidity(
                 (
-                    first_specific_mass_flow * first.humidity
-                    + first_specific_mass_flow * first.humidity * second.humidity
-                    + second_specific_mass_flow * second.humidity
-                    + second_specific_mass_flow * first.humidity * second.humidity
+                    first_specific_mass_flow * first.humidity * (1 + second.humidity)
+                    + second_specific_mass_flow * second.humidity * (1 + first.humidity)
                 )
                 / (
-                    first_specific_mass_flow
-                    + first_specific_mass_flow * second.humidity
-                    + second_specific_mass_flow
-                    + second_specific_mass_flow * first.humidity
+                    first_specific_mass_flow * (1 + second.humidity)
+                    + second_specific_mass_flow * (1 + first.humidity)
                 )
             ),
         )
