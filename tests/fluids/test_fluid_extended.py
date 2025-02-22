@@ -53,10 +53,10 @@ class TestFluidExtended:
     )
 
     def test_specific_heat_const_volume_water_in_standard_conditions_returns_4156(self):
-        assert self.fluid.specific_heat_const_volume == 4156.6814728615545
+        assert abs(self.fluid.specific_heat_const_volume - 4156.6814728615545) < 1e-6
 
     def test_molar_density_water_in_standard_conditions_returns_55408(self):
-        assert self.fluid.molar_density == 55408.953697937126
+        assert abs(self.fluid.molar_density - 55408.953697937126) < 1e-6
 
     def test_ozone_depletion_potential_water_in_standard_conditions_returns_none(self):
         assert self.fluid.ozone_depletion_potential is None

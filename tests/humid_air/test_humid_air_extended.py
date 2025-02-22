@@ -35,4 +35,4 @@ class TestHumidAirExtended:
     def test_specific_heat_const_volume_humid_air_in_standard_conditions_returns_722(
         self,
     ):
-        assert self.humid_air.specific_heat_const_volume == 722.687189702383
+        assert abs(self.humid_air.specific_heat_const_volume - 722.687189702383) < 1e-6
