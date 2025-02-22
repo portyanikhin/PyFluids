@@ -39,6 +39,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: Implementation",
     "Programming Language :: Python :: Implementation :: PyPy",
     "Topic :: Education",
@@ -52,7 +53,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.9, <3.13"
+python = ">=3.9, <3.14"
 CoolProp = "6.7.0"
 tomli = "2.2.1"
 
