@@ -128,6 +128,7 @@ class FluidsList(Enum):
     R1243zf = "R1243zf"
     R125 = "R125"
     R13 = "R13"
+    R1336mzzE = "R1336mzz(E)"
     R134a = "R134a"
     R13I1 = "R13I1"
     R14 = "R14"
