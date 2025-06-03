@@ -58,7 +58,7 @@ CoolProp = "6.8.0"
 tomli = "2.2.1"
 
 [tool.poetry.group.test.dependencies]
-pytest = "8.3.5"
+pytest = "8.4.0"
 pytest-asyncio = "0.26.0"
 pytest-cov = "6.1.1"
 
