@@ -2,9 +2,9 @@ name: Build & Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-tests:
@@ -13,8 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ windows-latest, macos-latest, ubuntu-latest ]
-        python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13" ]
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     defaults:
       run:
         shell: bash

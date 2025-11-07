@@ -2,9 +2,7 @@
 name = "pyfluids"
 version = "2.8.2"
 description = "Simple, full-featured, lightweight CoolProp wrapper for Python"
-authors = [
-    "Vladimir Portyanikhin <v.portyanikhin@ya.ru>",
-]
+authors = ["Vladimir Portyanikhin <v.portyanikhin@ya.ru>"]
 license = "MIT"
 readme = "PyPI.md"
 homepage = "https://github.com/portyanikhin/PyFluids"
@@ -48,9 +46,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Chemistry",
     "Topic :: Scientific/Engineering :: Physics",
 ]
-packages = [
-    { include = "pyfluids" },
-]
+packages = [{ include = "pyfluids" }]
 
 [tool.poetry.dependencies]
 python = ">=3.9, <3.14"
