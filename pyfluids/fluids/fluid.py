@@ -12,13 +12,21 @@ __all__ = ["Fluid"]
 class Fluid(AbstractFluid):
     """Pure/pseudo-pure fluid or binary mixture."""
 
-    def __init__(self, name: FluidsList, fraction: float | None = None):
+    def __init__(
+        self,
+        name: FluidsList,
+        fraction: float | None = None,
+        coolprop_backend: str | None = None,
+    ):
         """
         Pure/pseudo-pure fluid or binary mixture.
 
         :param name: Selected fluid name.
         :param fraction: Mass-based or volume-based fraction for binary mixtures
             [by default, %; you can change this using the configuration file].
+        :param coolprop_backend: CoolProp backend to be used
+            (e.g., 'HEOS', 'INCOMP', 'REFPROP', 'IF97', etc.).
+            If provided, overrides the default one defined for the fluid name.
         :raises ValueError: If fraction is invalid.
         """
         super().__init__()
@@ -39,14 +47,19 @@ class Fluid(AbstractFluid):
             if self.__name.pure
             else fraction
         )
+        self.__coolprop_backend = (
+            coolprop_backend
+            if coolprop_backend is not None
+            else self.__name.coolprop_backend
+        )
         self._backend = AbstractState(
-            self.__name.coolprop_backend, self.__name.coolprop_name
+            self.__coolprop_backend, self.__name.coolprop_name
         )
         if not self.__name.pure:
             self.__set_fraction()
 
     def factory(self) -> Fluid:
-        return Fluid(self.__name, self.__fraction)
+        return Fluid(self.__name, self.__fraction, self.__coolprop_backend)
 
     @property
     def name(self) -> FluidsList:
@@ -60,6 +73,11 @@ class Fluid(AbstractFluid):
         [by default, %; you can change this using the configuration file].
         """
         return self.__fraction
+
+    @property
+    def coolprop_backend(self) -> str:
+        """Type of CoolProp backend."""
+        return self.__coolprop_backend
 
     def mixing(
         self,
@@ -103,4 +121,11 @@ class Fluid(AbstractFluid):
         return not self.__eq__(other)
 
     def __hash__(self) -> int:
-        return hash((self.__name.coolprop_name, self.__fraction, super().__hash__()))
+        return hash(
+            (
+                self.__name.coolprop_name,
+                self.__fraction,
+                self.__coolprop_backend,
+                super().__hash__(),
+            )
+        )
