@@ -425,7 +425,7 @@ class FluidsList(Enum):
 
     @property
     def coolprop_backend(self) -> str:
-        """Type of CoolProp backend."""
+        """Default type of CoolProp backend."""
         return self.__coolprop_backend
 
     @property
