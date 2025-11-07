@@ -64,8 +64,22 @@ class TestFluid:
     def test_factory_always_fraction_is_constant(self):
         assert self.fluid.factory().fraction == self.fluid.fraction
 
+    def test_coolprop_backend_always_fraction_is_constant(self):
+        assert self.fluid.factory().coolprop_backend == self.fluid.coolprop_backend
+
     def test_factory_always_phase_is_unknown(self):
         assert self.fluid.factory().phase == Phases.Unknown
+
+    def test_overridden_coolprop_backend_is_used(self):
+        default = Fluid(FluidsList.Water)
+        custom = Fluid(
+            FluidsList.Water,
+            coolprop_backend="IF97",
+        )
+        assert custom.coolprop_backend == "IF97"
+        assert custom.coolprop_backend != default.coolprop_backend
+        assert custom != default
+        assert custom.factory() == custom
 
     def test_clone_always_returns_new_instance_with_same_state(self):
         origin = self.fluid.with_state(Input.pressure(101325), Input.temperature(20))

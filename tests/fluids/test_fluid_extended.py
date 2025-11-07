@@ -8,14 +8,19 @@ from pyfluids import Fluid, FluidsList, Input
 class FluidExtended(Fluid):
     """An example of how to add new properties to the Fluid class."""
 
-    def __init__(self, name: FluidsList, fraction: float = None):
-        super().__init__(name, fraction)
+    def __init__(
+        self,
+        name: FluidsList,
+        fraction: float = None,
+        coolprop_backend: str | None = None,
+    ):
+        super().__init__(name, fraction, coolprop_backend)
         self.__molar_density: float | None = None
         self.__ozone_depletion_potential: float | None = None
         self.__specific_heat_const_volume: float | None = None
 
     def factory(self) -> FluidExtended:
-        return FluidExtended(self.name, self.fraction)
+        return FluidExtended(self.name, self.fraction, self.coolprop_backend)
 
     def reset(self):
         super().reset()
