@@ -17,7 +17,7 @@ jobs:
       - name: Install uv and set the Python version
         uses: astral-sh/setup-uv@v7
         with:
-          python-version: 3.13
+          python-version: 3.14
       - name: Build package
         run: uv build
       - name: Publish package to PyPI
