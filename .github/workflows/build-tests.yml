@@ -2,9 +2,9 @@ name: Build & Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-tests:
@@ -13,31 +13,24 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ windows-latest, macos-latest, ubuntu-latest ]
-        python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13" ]
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     defaults:
       run:
         shell: bash
 
     steps:
       - uses: actions/checkout@v6
-      - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+      - name: Install uv and set the Python version
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Setup Poetry
-        uses: snok/install-poetry@v1
-        with:
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-      - name: Restore dependencies
-        run: poetry install --no-interaction --no-root
+      - name: Install the project
+        run: uv sync --locked --all-extras --dev
       - name: Test
-        run: |
-          source $VENV
-          pytest --cov pyfluids --cov-report=xml
+        run: uv run pytest --cov pyfluids --cov-report=xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
+          files: ./coverage.xml
