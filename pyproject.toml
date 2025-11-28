@@ -47,7 +47,7 @@ classifiers = [
 dependencies = ["CoolProp==7.2.0", "tomli~=2.3"]
 
 [dependency-groups]
-dev = ["pytest~=8.4", "pytest-asyncio~=1.2", "pytest-cov~=7.0"]
+dev = ["pytest", "pytest-asyncio", "pytest-cov"]
 
 [project.urls]
 homepage = "https://github.com/portyanikhin/PyFluids"
